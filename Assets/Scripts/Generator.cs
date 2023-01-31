@@ -67,7 +67,7 @@ public class Generator : MonoBehaviour
                 }
                 // Mathf.PerlinNoise(vertPosWorld.x * frequency, vertPosWorld.z * frequency);
 
-                vertPosLocal.y = noise * mNoiseStrength;
+                vertPosLocal.y = noise * mNoiseStrength * Mathf.PerlinNoise(vertPosWorld.z * 0.02f, vertPosWorld.x * 0.02f);
 
                 verts[vertIdx] = vertPosLocal;
 
