@@ -308,7 +308,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mChunkPrefab: {fileID: 477373311771513660, guid: b981ba8e13fe82649924d6b144191e9b, type: 3}
-  mDefaultMaterial: {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
+  mDefaultMaterial: {fileID: 2100000, guid: 90fbd4072f1a3414fa9e4e444fb0c23d, type: 2}
   mNoiseStrength: 40
   frequency: 0.125
   octaves: 4
