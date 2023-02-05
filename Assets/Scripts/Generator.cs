@@ -13,7 +13,20 @@ public class Generator : MonoBehaviour
     [SerializeField] private float lacunarity;
     [SerializeField] private float persistence;
 
+    private SimplexNoise mainTerrainNoise;
+    private SimplexNoise baseHeightNoise;
+    private SimplexNoise hillinessNoise;
+
+
     private Mesh mesh;
+
+    private void Start()
+    {
+        int seed = Random.Range(int.MinValue, int.MaxValue);
+        mainTerrainNoise = new SimplexNoise(seed);
+        baseHeightNoise = new SimplexNoise(seed++);
+        hillinessNoise = new SimplexNoise(seed++);
+    }
 
     public GameObject GenerateNewChunk(Vector3 rootPos, Transform parent)
     {
@@ -61,13 +74,17 @@ public class Generator : MonoBehaviour
                 vertPosWorld /= 13;
 
                 float noise = 0;
+                float divisor = 0;
                 for (int i = 0; i < octaves; i++)
                 {
-                    noise += Mathf.PerlinNoise(vertPosWorld.x * Mathf.Pow(lacunarity, i) * frequency, vertPosWorld.z * Mathf.Pow(lacunarity, i) * frequency) * Mathf.Pow(persistence, i);
+                    noise += mainTerrainNoise.Evaluate(new(vertPosWorld.x * Mathf.Pow(lacunarity, i) * frequency, 0f, vertPosWorld.z * Mathf.Pow(lacunarity, i) * frequency)) * Mathf.Pow(persistence, i);
+                    divisor += Mathf.Pow(persistence, i);
                 }
                 // Mathf.PerlinNoise(vertPosWorld.x * frequency, vertPosWorld.z * frequency);
+                noise /= divisor;
+                vertPosLocal.y = baseHeightNoise.Evaluate(new(vertPosWorld.x * 0.01f, 0f, vertPosWorld.z * 0.01f)) * 25f + noise * mNoiseStrength * hillinessNoise.Evaluate(new(vertPosWorld.z * 0.02f, 0f, vertPosWorld.x * 0.02f));
 
-                vertPosLocal.y = noise * mNoiseStrength * Mathf.PerlinNoise(vertPosWorld.z * 0.02f, vertPosWorld.x * 0.02f);
+                vertPosLocal.y += 10f;
 
                 verts[vertIdx] = vertPosLocal;
 
