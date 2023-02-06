@@ -74,7 +74,8 @@ public class Generator : MonoBehaviour
 
                 if (noiseResult > 0.6f && Random.Range(0.6f, 1f) <= noiseResult)
                 {
-                    Vector3 treePos = new(vertPosWorld.x, EvaluateCoordinateHeight(new(vertPosWorld.x, 0f, vertPosWorld.z)), vertPosWorld.z);
+                    Vector3 treePos = new(Random.Range(vertPosWorld.x - 1.3f, vertPosWorld.x + 1.3f), 0f, Random.Range(vertPosWorld.z - 1.3f, vertPosWorld.z + 1.3f));
+                    treePos.y = EvaluateCoordinateHeight(treePos);
 
                     if (treePos.y > 6 && treePos.y < 40)
                     {
