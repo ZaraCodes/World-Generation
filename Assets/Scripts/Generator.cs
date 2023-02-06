@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Drawing;
 using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
     [SerializeField] private GameObject waterPrefab;
+    [SerializeField] private GameObject treePrefab;
     [SerializeField] private Material mDefaultMaterial;
     [SerializeField] private float mNoiseStrength;
     [SerializeField] private float frequency;
@@ -16,6 +18,7 @@ public class Generator : MonoBehaviour
     private SimplexNoise mainTerrainNoise;
     private SimplexNoise baseHeightNoise;
     private SimplexNoise hillinessNoise;
+    private SimplexNoise woodinessNoise;
 
     private Mesh mesh;
 
@@ -25,6 +28,7 @@ public class Generator : MonoBehaviour
         mainTerrainNoise = new SimplexNoise(seed);
         baseHeightNoise = new SimplexNoise(seed++);
         hillinessNoise = new SimplexNoise(seed++);
+        woodinessNoise = new SimplexNoise(seed++);
     }
 
     public GameObject GenerateNoiseMeshObject(Vector3 rootPos, int resolution, float chunkSize, Transform parent)
@@ -51,7 +55,37 @@ public class Generator : MonoBehaviour
         waterPlane.transform.position = new Vector3(generatedTile.transform.position.x, 2.5f, generatedTile.transform.position.z);
         waterPlane.transform.localScale = new(chunkSize, chunkSize, chunkSize);
 
+        PlaceTrees(generatedTile, chunkSize);
+
         return generatedTile;
+    }
+
+    private void PlaceTrees(GameObject generatedTile, float chunkSize)
+    {
+        Vector3 cornerPos = new Vector3(-chunkSize / 2f, 0f, -chunkSize / 2f);
+        for (int x = 0; x < chunkSize; x += 4)
+        {
+            for (int z = 0; z < chunkSize; z += 4)
+            {
+                Vector3 vertPosLocal = cornerPos + new Vector3(x, 0, z);
+                Vector3 vertPosWorld = generatedTile.transform.position + vertPosLocal;
+
+                float noiseResult = (woodinessNoise.Evaluate(new Vector3(vertPosWorld.x, 0, vertPosWorld.z) * 0.004f) + 1) / 2;
+
+                if (noiseResult > 0.6f && Random.Range(0.6f, 1f) <= noiseResult)
+                {
+                    Vector3 treePos = new(vertPosWorld.x, EvaluateCoordinateHeight(new(vertPosWorld.x, 0f, vertPosWorld.z)), vertPosWorld.z);
+
+                    if (treePos.y > 6 && treePos.y < 40)
+                    {
+                        GameObject tree = Instantiate(treePrefab);
+                        tree.transform.parent = generatedTile.transform;
+                        tree.transform.position = treePos;
+                        tree.transform.Rotate(new(0, Random.Range(0f, 360f)));
+                    }
+                }
+            }
+        }
     }
     
     private void GenerateMesh(Vector3 rootPos, int resolution, float size)
@@ -67,9 +101,8 @@ public class Generator : MonoBehaviour
             {
                 Vector3 vertPosLocal = cornerPos + (new Vector3(x, 0, y) / resolution) * size;
                 Vector3 vertPosWorld = rootPos + vertPosLocal;
-                vertPosWorld /= 13;
 
-                vertPosLocal.y = EvaluateCoordinate(vertPosWorld);
+                vertPosLocal.y = EvaluateCoordinateHeight(vertPosWorld);
 
                 verts[vertIdx] = vertPosLocal;
 
@@ -94,8 +127,10 @@ public class Generator : MonoBehaviour
         mesh.RecalculateNormals();
     }
 
-    public float EvaluateCoordinate(Vector3 vertPosWorld)
+    public float EvaluateCoordinateHeight(Vector3 vertPosWorld)
     {
+        vertPosWorld /= 13;
+
         float noise = 0;
         float divisor = 0;
         for (int i = 0; i < octaves; i++)

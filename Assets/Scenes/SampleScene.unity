@@ -312,6 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterPrefab: {fileID: 3275379524070221797, guid: 18a841acc4fe2744d8463688e1df7f85, type: 3}
+  treePrefab: {fileID: 0}
   mDefaultMaterial: {fileID: 2100000, guid: 90fbd4072f1a3414fa9e4e444fb0c23d, type: 2}
   mNoiseStrength: 100
   frequency: 0.0625
@@ -364,7 +365,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mGenerator: {fileID: 1275402835}
   mViewer: {fileID: 1738810542}
-  mRenderDistance: 25
+  mRenderDistance: 10
   mChunkSize: 32
   mResolution: 64
 --- !u!4 &1720179945

@@ -60,7 +60,8 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        transform.position = new(0f, generator.EvaluateCoordinate(transform.position) + 1f, 0f);
+        transform.position = new(Random.Range(-100, 100), 1f, Random.Range(-100, 100));
+        transform.position = new(transform.position.x, generator.EvaluateCoordinateHeight(transform.position) + 1f, transform.position.z);
     }
 
     // Update is called once per frame
