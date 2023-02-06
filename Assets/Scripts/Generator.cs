@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
-    [SerializeField] private GameObject mChunkPrefab;
+    [SerializeField] private GameObject waterPrefab;
     [SerializeField] private Material mDefaultMaterial;
     [SerializeField] private float mNoiseStrength;
     [SerializeField] private float frequency;
@@ -17,7 +17,6 @@ public class Generator : MonoBehaviour
     private SimplexNoise baseHeightNoise;
     private SimplexNoise hillinessNoise;
 
-
     private Mesh mesh;
 
     private void Awake()
@@ -26,19 +25,6 @@ public class Generator : MonoBehaviour
         mainTerrainNoise = new SimplexNoise(seed);
         baseHeightNoise = new SimplexNoise(seed++);
         hillinessNoise = new SimplexNoise(seed++);
-    }
-
-    private void Start()
-    {
-
-    }
-
-    public GameObject GenerateNewChunk(Vector3 rootPos, Transform parent)
-    {
-        GameObject newChunkGo = Instantiate(mChunkPrefab, parent);
-        newChunkGo.transform.position = rootPos;
-
-        return newChunkGo;
     }
 
     public GameObject GenerateNoiseMeshObject(Vector3 rootPos, int resolution, float chunkSize, Transform parent)
@@ -51,7 +37,7 @@ public class Generator : MonoBehaviour
         MeshRenderer tileRenderer = generatedTile.AddComponent<MeshRenderer>();
         MeshFilter tileFilter = generatedTile.AddComponent<MeshFilter>();
         MeshCollider tileCollider = generatedTile.AddComponent<MeshCollider>();
-        mesh = new Mesh();
+        mesh = new();
         mesh.name = $"ChunkMesh_{rootPos.x}/{rootPos.z}";
 
         tileRenderer.material = mDefaultMaterial;
@@ -59,6 +45,11 @@ public class Generator : MonoBehaviour
 
         GenerateMesh(rootPos, resolution, chunkSize);
         tileCollider.sharedMesh = mesh;
+
+        GameObject waterPlane = Instantiate(waterPrefab);
+        waterPlane.transform.parent = generatedTile.transform;
+        waterPlane.transform.position = new Vector3(generatedTile.transform.position.x, 2.5f, generatedTile.transform.position.z);
+        waterPlane.transform.localScale = new(chunkSize, chunkSize, chunkSize);
 
         return generatedTile;
     }
@@ -68,7 +59,7 @@ public class Generator : MonoBehaviour
         Vector3[] verts = new Vector3[(resolution + 1) * (resolution + 1)];
         int[] tris = new int[resolution * resolution * 2 * 3];
 
-        Vector3 cornerPos = new Vector3(-0.5f, 0f, -0.5f);
+        Vector3 cornerPos = new Vector3(-size / 2f, 0f, -size / 2f);
 
         for (int y = 0, vertIdx = 0, triIdx = 0; y <= resolution; y++)
         {

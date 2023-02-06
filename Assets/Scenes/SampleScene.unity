@@ -17,7 +17,7 @@ RenderSettings:
   m_Fog: 1
   m_FogColor: {r: 0.49411762, g: 0.7665972, b: 1, a: 1}
   m_FogMode: 3
-  m_FogDensity: 0.01
+  m_FogDensity: 0.005
   m_LinearFogStart: 0
   m_LinearFogEnd: 300
   m_AmbientSkyColor: {r: 0.212, g: 0.227, b: 0.259, a: 1}
@@ -148,7 +148,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2660525083550027693, guid: f282c10e12418344699ad6062ac8b291, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 100
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2660525083550027693, guid: f282c10e12418344699ad6062ac8b291, type: 3}
       propertyPath: m_LocalPosition.z
@@ -311,11 +311,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 969827498adfc3e42a7492735864f74e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mChunkPrefab: {fileID: 477373311771513660, guid: b981ba8e13fe82649924d6b144191e9b, type: 3}
+  waterPrefab: {fileID: 3275379524070221797, guid: 18a841acc4fe2744d8463688e1df7f85, type: 3}
   mDefaultMaterial: {fileID: 2100000, guid: 90fbd4072f1a3414fa9e4e444fb0c23d, type: 2}
-  mNoiseStrength: 40
-  frequency: 0.125
-  octaves: 4
+  mNoiseStrength: 100
+  frequency: 0.0625
+  octaves: 6
   lacunarity: 2
   persistence: 0.5
 --- !u!4 &1275402836
@@ -364,8 +364,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mGenerator: {fileID: 1275402835}
   mViewer: {fileID: 1738810542}
-  mRenderDistance: 12
-  mChunkSize: 16
+  mRenderDistance: 25
+  mChunkSize: 32
   mResolution: 64
 --- !u!4 &1720179945
 Transform:
