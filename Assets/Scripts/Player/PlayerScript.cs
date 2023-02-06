@@ -27,6 +27,7 @@ public class PlayerScript : MonoBehaviour
     /// <summary>Movement vector</summary>
     private Vector2 movementVector;
 
+    [SerializeField] private Generator generator;
     #endregion
 
     #region Methods
@@ -59,7 +60,7 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+        transform.position = new(0f, generator.EvaluateCoordinate(transform.position) + 1f, 0f);
     }
 
     // Update is called once per frame

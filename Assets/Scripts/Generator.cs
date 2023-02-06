@@ -20,12 +20,17 @@ public class Generator : MonoBehaviour
 
     private Mesh mesh;
 
-    private void Start()
+    private void Awake()
     {
         int seed = Random.Range(int.MinValue, int.MaxValue);
         mainTerrainNoise = new SimplexNoise(seed);
         baseHeightNoise = new SimplexNoise(seed++);
         hillinessNoise = new SimplexNoise(seed++);
+    }
+
+    private void Start()
+    {
+
     }
 
     public GameObject GenerateNewChunk(Vector3 rootPos, Transform parent)
@@ -73,18 +78,7 @@ public class Generator : MonoBehaviour
                 Vector3 vertPosWorld = rootPos + vertPosLocal;
                 vertPosWorld /= 13;
 
-                float noise = 0;
-                float divisor = 0;
-                for (int i = 0; i < octaves; i++)
-                {
-                    noise += mainTerrainNoise.Evaluate(new(vertPosWorld.x * Mathf.Pow(lacunarity, i) * frequency, 0f, vertPosWorld.z * Mathf.Pow(lacunarity, i) * frequency)) * Mathf.Pow(persistence, i);
-                    divisor += Mathf.Pow(persistence, i);
-                }
-                // Mathf.PerlinNoise(vertPosWorld.x * frequency, vertPosWorld.z * frequency);
-                noise /= divisor;
-                vertPosLocal.y = baseHeightNoise.Evaluate(new(vertPosWorld.x * 0.01f, 0f, vertPosWorld.z * 0.01f)) * 25f + noise * mNoiseStrength * hillinessNoise.Evaluate(new(vertPosWorld.z * 0.02f, 0f, vertPosWorld.x * 0.02f));
-
-                vertPosLocal.y += 10f;
+                vertPosLocal.y = EvaluateCoordinate(vertPosWorld);
 
                 verts[vertIdx] = vertPosLocal;
 
@@ -107,5 +101,22 @@ public class Generator : MonoBehaviour
         mesh.vertices = verts;
         mesh.triangles = tris;
         mesh.RecalculateNormals();
+    }
+
+    public float EvaluateCoordinate(Vector3 vertPosWorld)
+    {
+        float noise = 0;
+        float divisor = 0;
+        for (int i = 0; i < octaves; i++)
+        {
+            noise += mainTerrainNoise.Evaluate(new(vertPosWorld.x * Mathf.Pow(lacunarity, i) * frequency, 0f, vertPosWorld.z * Mathf.Pow(lacunarity, i) * frequency)) * Mathf.Pow(persistence, i);
+            divisor += Mathf.Pow(persistence, i);
+        }
+        // Mathf.PerlinNoise(vertPosWorld.x * frequency, vertPosWorld.z * frequency);
+        noise /= divisor;
+        float worldHeight = baseHeightNoise.Evaluate(new(vertPosWorld.x * 0.01f, 0f, vertPosWorld.z * 0.01f)) * 25f + noise * mNoiseStrength * hillinessNoise.Evaluate(new(vertPosWorld.z * 0.02f, 0f, vertPosWorld.x * 0.02f));
+
+        worldHeight += 10f;
+        return worldHeight;
     }
 }
