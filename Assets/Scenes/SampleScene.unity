@@ -312,7 +312,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waterPrefab: {fileID: 3275379524070221797, guid: 18a841acc4fe2744d8463688e1df7f85, type: 3}
-  treePrefab: {fileID: 0}
+  treePrefab: {fileID: 191266, guid: d9e861d08e65adf43a9cccd3205a1e22, type: 3}
   mDefaultMaterial: {fileID: 2100000, guid: 90fbd4072f1a3414fa9e4e444fb0c23d, type: 2}
   mNoiseStrength: 100
   frequency: 0.0625
