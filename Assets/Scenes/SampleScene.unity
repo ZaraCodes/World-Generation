@@ -319,7 +319,9 @@ MonoBehaviour:
   octaves: 6
   lacunarity: 2
   persistence: 0.5
-  hillinessDensity: 0.21333334
+  hillinessFrequency: 0.21333334
+  baseHeightFequency: 0.16
+  baseHeightMultiplier: 25
 --- !u!4 &1275402836
 Transform:
   m_ObjectHideFlags: 0
