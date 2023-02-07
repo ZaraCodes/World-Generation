@@ -314,14 +314,14 @@ MonoBehaviour:
   waterPrefab: {fileID: 3275379524070221797, guid: 18a841acc4fe2744d8463688e1df7f85, type: 3}
   treePrefab: {fileID: 191266, guid: d9e861d08e65adf43a9cccd3205a1e22, type: 3}
   mDefaultMaterial: {fileID: 2100000, guid: 90fbd4072f1a3414fa9e4e444fb0c23d, type: 2}
-  mNoiseStrength: 100
+  mNoiseStrength: 95
   frequency: 0.0625
   octaves: 6
   lacunarity: 2
   persistence: 0.5
   hillinessFrequency: 0.21333334
-  baseHeightFequency: 0.16
-  baseHeightMultiplier: 25
+  baseHeightFequency: 0.1
+  baseHeightMultiplier: 40
 --- !u!4 &1275402836
 Transform:
   m_ObjectHideFlags: 0
@@ -368,7 +368,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   mGenerator: {fileID: 1275402835}
   mViewer: {fileID: 1738810542}
-  mRenderDistance: 10
+  mRenderDistance: 12
   mChunkSize: 32
   mResolution: 64
 --- !u!4 &1720179945

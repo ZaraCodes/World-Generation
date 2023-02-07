@@ -45,6 +45,7 @@ public class Generator : MonoBehaviour
         MeshRenderer tileRenderer = generatedTile.AddComponent<MeshRenderer>();
         MeshFilter tileFilter = generatedTile.AddComponent<MeshFilter>();
         MeshCollider tileCollider = generatedTile.AddComponent<MeshCollider>();
+
         mesh = new();
         mesh.name = $"ChunkMesh_{rootPos.x}/{rootPos.z}";
 
