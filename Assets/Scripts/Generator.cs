@@ -51,13 +51,16 @@ public class Generator : MonoBehaviour
         tileRenderer.material = mDefaultMaterial;
         tileFilter.sharedMesh = mesh;
 
-        GenerateMesh(rootPos, resolution, chunkSize);
+        GenerateMesh(rootPos, resolution, chunkSize, out float minHeight);
         tileCollider.sharedMesh = mesh;
 
-        GameObject waterPlane = Instantiate(waterPrefab);
-        waterPlane.transform.parent = generatedTile.transform;
-        waterPlane.transform.position = new Vector3(generatedTile.transform.position.x, 2.5f, generatedTile.transform.position.z);
-        waterPlane.transform.localScale = new(chunkSize, chunkSize, chunkSize);
+        if (minHeight < 2.5f)
+        {
+            GameObject waterPlane = Instantiate(waterPrefab);
+            waterPlane.transform.parent = generatedTile.transform;
+            waterPlane.transform.position = new Vector3(generatedTile.transform.position.x, 2.5f, generatedTile.transform.position.z);
+            waterPlane.transform.localScale = new(chunkSize, chunkSize, chunkSize);
+        }
 
         PlaceTrees(generatedTile, chunkSize);
 
@@ -93,8 +96,9 @@ public class Generator : MonoBehaviour
         }
     }
     
-    private void GenerateMesh(Vector3 rootPos, int resolution, float size)
+    private void GenerateMesh(Vector3 rootPos, int resolution, float size, out float minHeight)
     {
+        minHeight = 10000f;
         Vector3[] verts = new Vector3[(resolution + 1) * (resolution + 1)];
         int[] tris = new int[resolution * resolution * 2 * 3];
 
@@ -108,6 +112,7 @@ public class Generator : MonoBehaviour
                 Vector3 vertPosWorld = rootPos + vertPosLocal;
 
                 vertPosLocal.y = EvaluateCoordinateHeight(vertPosWorld);
+                if (vertPosLocal.y < minHeight) minHeight = vertPosLocal.y;
 
                 verts[vertIdx] = vertPosLocal;
 
