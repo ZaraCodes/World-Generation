@@ -15,6 +15,8 @@ public class Generator : MonoBehaviour
     [SerializeField] private float lacunarity;
     [SerializeField] private float persistence;
 
+    [SerializeField] private float hillinessDensity;
+
     private SimplexNoise mainTerrainNoise;
     private SimplexNoise baseHeightNoise;
     private SimplexNoise hillinessNoise;
@@ -141,8 +143,8 @@ public class Generator : MonoBehaviour
         }
         // Mathf.PerlinNoise(vertPosWorld.x * frequency, vertPosWorld.z * frequency);
         noise /= divisor;
-        float worldHeight = baseHeightNoise.Evaluate(new(vertPosWorld.x * 0.01f, 0f, vertPosWorld.z * 0.01f)) * 25f + noise * mNoiseStrength * hillinessNoise.Evaluate(new(vertPosWorld.z * 0.02f, 0f, vertPosWorld.x * 0.02f));
-
+        float worldHeight = baseHeightNoise.Evaluate(new(vertPosWorld.x * 0.01f, 0f, vertPosWorld.z * 0.01f)) * 25f;
+        worldHeight += noise * mNoiseStrength * ((hillinessNoise.Evaluate(new(vertPosWorld.z * frequency * hillinessDensity, 0f, vertPosWorld.x * frequency * hillinessDensity)) + 1) / 2);
         worldHeight += 10f;
         return worldHeight;
     }

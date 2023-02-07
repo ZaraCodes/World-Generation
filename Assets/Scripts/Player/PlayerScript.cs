@@ -62,6 +62,7 @@ public class PlayerScript : MonoBehaviour
     {
         transform.position = new(Random.Range(-100, 100), 1f, Random.Range(-100, 100));
         transform.position = new(transform.position.x, generator.EvaluateCoordinateHeight(transform.position) + 1f, transform.position.z);
+        if (transform.position.y < 3.5f) transform.position = new(transform.position.x, 3.5f, transform.position.z);
     }
 
     // Update is called once per frame
