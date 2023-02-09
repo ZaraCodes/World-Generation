@@ -5,7 +5,7 @@ public class PlayerMovement : MonoBehaviour
 {
     #region Class Variables & Properties
     /// <summary>Reference to the character controller</summary>
-    [SerializeField] private CharacterController characterController;
+    public CharacterController characterController;
 
     /// <summary>Reference to the player script</summary>
     [SerializeField] private PlayerScript playerScript;

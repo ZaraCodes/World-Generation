@@ -46,6 +46,16 @@ public class PlayerScript : MonoBehaviour
         }
     }
 
+    public void Teleport(float x, float z)
+    {
+        playerMovement.characterController.enabled = false;
+        Vector3 newPosition = new(x, generator.EvaluateCoordinateHeight(new(x, 0, z)) + 1f, z);
+        transform.position = newPosition;
+        if (transform.position.y < 3.5f) transform.position = new(transform.position.x, 3.5f, transform.position.z);
+
+        playerMovement.characterController.enabled = true;
+    }
+
     /// <summary>
     /// Enables or disables player movement inputs
     /// </summary>

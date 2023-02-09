@@ -1,5 +1,5 @@
 {
-    "name": "Neonine Controls",
+    "name": "WorldGenControls",
     "maps": [
         {
             "name": "JacksonControls",
@@ -284,48 +284,18 @@
             "id": "7572ab05-d513-4e0a-b0ac-93115c76a4b5",
             "actions": [
                 {
-                    "name": "UI-Back",
+                    "name": "ToggleChat",
                     "type": "Button",
-                    "id": "1a631f52-6236-44b9-b9ae-f9ed164a2b8f",
+                    "id": "df87b852-6b5a-4d46-906e-5939333a661e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Inventory-open",
+                    "name": "ConfirmChat",
                     "type": "Button",
-                    "id": "1af1f26c-a293-4e05-9e53-063bee8c036b",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Textbook-open",
-                    "type": "Button",
-                    "id": "928b7679-e414-4df0-a397-0ad94141e846",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Quests-open",
-                    "type": "Button",
-                    "id": "e42d2e9f-b4b1-4169-841e-ce992f2115a5",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "Options-open",
-                    "type": "Button",
-                    "id": "9a798666-f10c-4d0f-a6cf-00414e03f4e0",
-                    "name": "TextboxNext",
-                    "type": "Button",
-                    "id": "9224667a-4c1c-4fec-847b-4e8862f8e944",
+                    "id": "1a6586dc-83e2-44e3-b705-d93843d6f4c4",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
@@ -335,73 +305,45 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "fed90ccf-3172-4f17-9229-d310fc8ee4ad",
+                    "id": "87bc71fc-c307-4340-9cb3-5e7e6b98711d",
                     "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "UI-Back",
+                    "action": "ToggleChat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "1e1df91c-dd38-41dc-9576-db4cc72ca178",
-                    "path": "<Keyboard>/escape",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "UI-Back",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "3e106ae5-a766-4859-894c-ef7c996a936a",
-                    "path": "<Keyboard>/i",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "Inventory-open",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "73abc18c-cb4c-4ea8-b926-3f03512614a6",
+                    "id": "fd574cea-7e92-471d-8cb4-c08ef8eb19af",
                     "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "Textbook-open",
+                    "action": "ToggleChat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "8ff4203d-4cef-440a-a16d-bc8c605a055a",
-                    "path": "<Keyboard>/u",
+                    "id": "d765958d-a366-453a-a747-7afdc23bddf0",
+                    "path": "",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "Quests-open",
+                    "action": "ConfirmChat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "d1d6bafd-5838-4d88-9cd3-36990b273ac2",
-                    "path": "<Keyboard>/o",
+                    "id": "6120f271-af03-4e1d-aefa-734d88447ee5",
+                    "path": "<Keyboard>/enter",
                     "interactions": "",
                     "processors": "",
                     "groups": "Keyboard & Mouse",
-                    "action": "Options-open",
-                    "id": "25efd45e-0894-4bd9-a869-671b54b7a3c8",
-                    "path": "<Keyboard>/space",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Keyboard & Mouse",
-                    "action": "TextboxNext",
+                    "action": "ConfirmChat",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

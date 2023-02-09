@@ -306,45 +306,18 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
             ""id"": ""7572ab05-d513-4e0a-b0ac-93115c76a4b5"",
             ""actions"": [
                 {
-                    ""name"": ""UI-Back"",
+                    ""name"": ""ToggleChat"",
                     ""type"": ""Button"",
-                    ""id"": ""1a631f52-6236-44b9-b9ae-f9ed164a2b8f"",
+                    ""id"": ""df87b852-6b5a-4d46-906e-5939333a661e"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Inventory-open"",
+                    ""name"": ""ConfirmChat"",
                     ""type"": ""Button"",
-                    ""id"": ""1af1f26c-a293-4e05-9e53-063bee8c036b"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Textbook-open"",
-                    ""type"": ""Button"",
-                    ""id"": ""928b7679-e414-4df0-a397-0ad94141e846"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Quests-open"",
-                    ""type"": ""Button"",
-                    ""id"": ""e42d2e9f-b4b1-4169-841e-ce992f2115a5"",
-                    ""expectedControlType"": ""Button"",
-                    ""processors"": """",
-                    ""interactions"": """",
-                    ""initialStateCheck"": false
-                },
-                {
-                    ""name"": ""Options-open"",
-                    ""type"": ""Button"",
-                    ""id"": ""9a798666-f10c-4d0f-a6cf-00414e03f4e0"",
+                    ""id"": ""1a6586dc-83e2-44e3-b705-d93843d6f4c4"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -354,67 +327,45 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
             ""bindings"": [
                 {
                     ""name"": """",
-                    ""id"": ""fed90ccf-3172-4f17-9229-d310fc8ee4ad"",
+                    ""id"": ""87bc71fc-c307-4340-9cb3-5e7e6b98711d"",
                     ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""UI-Back"",
+                    ""action"": ""ToggleChat"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1e1df91c-dd38-41dc-9576-db4cc72ca178"",
-                    ""path"": ""<Keyboard>/escape"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""UI-Back"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""3e106ae5-a766-4859-894c-ef7c996a936a"",
-                    ""path"": ""<Keyboard>/i"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Inventory-open"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""73abc18c-cb4c-4ea8-b926-3f03512614a6"",
+                    ""id"": ""fd574cea-7e92-471d-8cb4-c08ef8eb19af"",
                     ""path"": ""<Keyboard>/t"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Textbook-open"",
+                    ""action"": ""ToggleChat"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""8ff4203d-4cef-440a-a16d-bc8c605a055a"",
-                    ""path"": ""<Keyboard>/u"",
+                    ""id"": ""d765958d-a366-453a-a747-7afdc23bddf0"",
+                    ""path"": """",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Quests-open"",
+                    ""action"": ""ConfirmChat"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d1d6bafd-5838-4d88-9cd3-36990b273ac2"",
-                    ""path"": ""<Keyboard>/o"",
+                    ""id"": ""6120f271-af03-4e1d-aefa-734d88447ee5"",
+                    ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
-                    ""action"": ""Options-open"",
+                    ""action"": ""ConfirmChat"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -463,11 +414,8 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
         m_JacksonControls_Interact = m_JacksonControls.FindAction("Interact", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
-        m_UI_UIBack = m_UI.FindAction("UI-Back", throwIfNotFound: true);
-        m_UI_Inventoryopen = m_UI.FindAction("Inventory-open", throwIfNotFound: true);
-        m_UI_Textbookopen = m_UI.FindAction("Textbook-open", throwIfNotFound: true);
-        m_UI_Questsopen = m_UI.FindAction("Quests-open", throwIfNotFound: true);
-        m_UI_Optionsopen = m_UI.FindAction("Options-open", throwIfNotFound: true);
+        m_UI_ToggleChat = m_UI.FindAction("ToggleChat", throwIfNotFound: true);
+        m_UI_ConfirmChat = m_UI.FindAction("ConfirmChat", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -616,20 +564,14 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
     // UI
     private readonly InputActionMap m_UI;
     private IUIActions m_UIActionsCallbackInterface;
-    private readonly InputAction m_UI_UIBack;
-    private readonly InputAction m_UI_Inventoryopen;
-    private readonly InputAction m_UI_Textbookopen;
-    private readonly InputAction m_UI_Questsopen;
-    private readonly InputAction m_UI_Optionsopen;
+    private readonly InputAction m_UI_ToggleChat;
+    private readonly InputAction m_UI_ConfirmChat;
     public struct UIActions
     {
         private @WorldGenControls m_Wrapper;
         public UIActions(@WorldGenControls wrapper) { m_Wrapper = wrapper; }
-        public InputAction @UIBack => m_Wrapper.m_UI_UIBack;
-        public InputAction @Inventoryopen => m_Wrapper.m_UI_Inventoryopen;
-        public InputAction @Textbookopen => m_Wrapper.m_UI_Textbookopen;
-        public InputAction @Questsopen => m_Wrapper.m_UI_Questsopen;
-        public InputAction @Optionsopen => m_Wrapper.m_UI_Optionsopen;
+        public InputAction @ToggleChat => m_Wrapper.m_UI_ToggleChat;
+        public InputAction @ConfirmChat => m_Wrapper.m_UI_ConfirmChat;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -639,40 +581,22 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
         {
             if (m_Wrapper.m_UIActionsCallbackInterface != null)
             {
-                @UIBack.started -= m_Wrapper.m_UIActionsCallbackInterface.OnUIBack;
-                @UIBack.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnUIBack;
-                @UIBack.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnUIBack;
-                @Inventoryopen.started -= m_Wrapper.m_UIActionsCallbackInterface.OnInventoryopen;
-                @Inventoryopen.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnInventoryopen;
-                @Inventoryopen.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnInventoryopen;
-                @Textbookopen.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTextbookopen;
-                @Textbookopen.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTextbookopen;
-                @Textbookopen.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTextbookopen;
-                @Questsopen.started -= m_Wrapper.m_UIActionsCallbackInterface.OnQuestsopen;
-                @Questsopen.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnQuestsopen;
-                @Questsopen.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnQuestsopen;
-                @Optionsopen.started -= m_Wrapper.m_UIActionsCallbackInterface.OnOptionsopen;
-                @Optionsopen.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnOptionsopen;
-                @Optionsopen.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnOptionsopen;
+                @ToggleChat.started -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleChat;
+                @ToggleChat.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleChat;
+                @ToggleChat.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnToggleChat;
+                @ConfirmChat.started -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirmChat;
+                @ConfirmChat.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirmChat;
+                @ConfirmChat.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirmChat;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
             {
-                @UIBack.started += instance.OnUIBack;
-                @UIBack.performed += instance.OnUIBack;
-                @UIBack.canceled += instance.OnUIBack;
-                @Inventoryopen.started += instance.OnInventoryopen;
-                @Inventoryopen.performed += instance.OnInventoryopen;
-                @Inventoryopen.canceled += instance.OnInventoryopen;
-                @Textbookopen.started += instance.OnTextbookopen;
-                @Textbookopen.performed += instance.OnTextbookopen;
-                @Textbookopen.canceled += instance.OnTextbookopen;
-                @Questsopen.started += instance.OnQuestsopen;
-                @Questsopen.performed += instance.OnQuestsopen;
-                @Questsopen.canceled += instance.OnQuestsopen;
-                @Optionsopen.started += instance.OnOptionsopen;
-                @Optionsopen.performed += instance.OnOptionsopen;
-                @Optionsopen.canceled += instance.OnOptionsopen;
+                @ToggleChat.started += instance.OnToggleChat;
+                @ToggleChat.performed += instance.OnToggleChat;
+                @ToggleChat.canceled += instance.OnToggleChat;
+                @ConfirmChat.started += instance.OnConfirmChat;
+                @ConfirmChat.performed += instance.OnConfirmChat;
+                @ConfirmChat.canceled += instance.OnConfirmChat;
             }
         }
     }
@@ -708,10 +632,7 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
     }
     public interface IUIActions
     {
-        void OnUIBack(InputAction.CallbackContext context);
-        void OnInventoryopen(InputAction.CallbackContext context);
-        void OnTextbookopen(InputAction.CallbackContext context);
-        void OnQuestsopen(InputAction.CallbackContext context);
-        void OnOptionsopen(InputAction.CallbackContext context);
+        void OnToggleChat(InputAction.CallbackContext context);
+        void OnConfirmChat(InputAction.CallbackContext context);
     }
 }
