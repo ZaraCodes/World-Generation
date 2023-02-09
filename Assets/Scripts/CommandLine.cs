@@ -22,6 +22,7 @@ public class CommandLine : MonoBehaviour
             chat.SetActive(true);
             chatText.ActivateInputField();
             chatText.Select();
+            chatText.text = string.Empty;
         }
     }
 
