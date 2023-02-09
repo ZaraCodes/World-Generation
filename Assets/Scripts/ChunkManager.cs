@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.UIElements;
@@ -47,12 +48,15 @@ public class ChunkManager : MonoBehaviour
                     if (!allChunkDic.ContainsKey(currChunkCoord))
                     {
                         Vector3 currChunkWorldPos = new(currChunkCoord.x * mChunkSize, 0, currChunkCoord.y * mChunkSize);
+
+                        // await Task.Run(() => mGenerator.GenerateNoiseMeshObject(currChunkWorldPos, mResolution, mChunkSize, transform, allChunkDic, currChunkCoord));
+
+                        // await mGenerator.GenerateNoiseMeshObject(currChunkWorldPos, mResolution, mChunkSize, transform, allChunkDic, currChunkCoord);
                         GameObject newChunkObj = mGenerator.GenerateNoiseMeshObject(currChunkWorldPos, mResolution, mChunkSize, transform);
 
                         allChunkDic.Add(currChunkCoord, new Chunk(newChunkObj));
                     }
-
-                    allChunkDic[currChunkCoord].SetVisibility(true);
+                    else allChunkDic[currChunkCoord].SetVisibility(true);
                 }
                 newActiveChunks.Add(currChunkCoord);
             }
@@ -64,7 +68,7 @@ public class ChunkManager : MonoBehaviour
         activeChunks = newActiveChunks;
     }
 
-    private class Chunk
+    public class Chunk
     {
         GameObject chunkObj;
         public Vector3 position;
