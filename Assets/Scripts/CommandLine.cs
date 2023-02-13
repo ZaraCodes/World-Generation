@@ -5,6 +5,8 @@ using TMPro;
 using UnityEngine.InputSystem;
 using UnityEditor;
 using UnityEngine.EventSystems;
+using System.IO;
+using System.Globalization;
 
 public class CommandLine : MonoBehaviour
 {
@@ -42,6 +44,23 @@ public class CommandLine : MonoBehaviour
                 chat.SetActive(false);
             }
         }
+    }
+
+    public void TakeScreenshot(InputAction.CallbackContext callbackContext)
+    {
+        if (callbackContext.action.WasPerformedThisFrame())
+        {
+            if (!Directory.Exists($"{Application.persistentDataPath}\\Screenshots"))
+            {
+                Directory.CreateDirectory($"{Application.persistentDataPath}\\Screenshots");
+            }
+            ScreenCapture.CaptureScreenshot($"{Application.persistentDataPath}\\Screenshots\\Screenshot_{TrimTime(System.DateTime.Now.Year)}-{TrimTime(System.DateTime.Now.Month)}-{TrimTime(System.DateTime.Now.Day)}_{TrimTime(System.DateTime.Now.Hour)}-{TrimTime(System.DateTime.Now.Minute)}-{TrimTime(System.DateTime.Now.Second)}.png");
+        }
+    }
+
+    private string TrimTime(int time)
+    {
+        return time.ToString().PadLeft(2, '0');
     }
 
     private void EvaluateCommand(string command)

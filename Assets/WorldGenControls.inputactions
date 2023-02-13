@@ -300,6 +300,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Take Screenshot",
+                    "type": "Button",
+                    "id": "37ef8d15-e0bc-4d04-8449-9803b041b9d3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -344,6 +353,28 @@
                     "processors": "",
                     "groups": "Keyboard & Mouse",
                     "action": "ConfirmChat",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9ee55f23-0179-41fd-afb8-c8dba24a0e71",
+                    "path": "",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Take Screenshot",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "c075e7cd-f138-4fb4-9043-7d5268f05d96",
+                    "path": "<Keyboard>/f12",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Keyboard & Mouse",
+                    "action": "Take Screenshot",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

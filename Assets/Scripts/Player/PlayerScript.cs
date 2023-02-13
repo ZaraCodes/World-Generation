@@ -27,29 +27,20 @@ public class PlayerScript : MonoBehaviour
     /// <summary>Movement vector</summary>
     private Vector2 movementVector;
 
+    /// <summary>Reference to the world generator</summary>
     [SerializeField] private Generator generator;
     #endregion
 
     #region Methods
     /// <summary>
-    /// Quits the game
+    /// Teleports the player to a desired position
     /// </summary>
-    /// <param name="callbackContext">Callback context if the input</param>
-    public void QuitGame(InputAction.CallbackContext callbackContext)
-    {
-        if (callbackContext.action.WasPerformedThisFrame()) {
-            #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-            #else
-            Application.Quit();
-            #endif
-        }
-    }
-
+    /// <param name="x">new x position in the world</param>
+    /// <param name="z">new z position in the world</param>
     public void Teleport(float x, float z)
     {
         playerMovement.characterController.enabled = false;
-        Vector3 newPosition = new(x, generator.EvaluateCoordinateHeight(new(x, 0, z)) + 1f, z);
+        Vector3 newPosition = new(x, generator.EvaluateCoordinateHeight(new(x, 0, z)) + 1.1f, z);
         transform.position = newPosition;
         if (transform.position.y < 3.5f) transform.position = new(transform.position.x, 3.5f, transform.position.z);
 

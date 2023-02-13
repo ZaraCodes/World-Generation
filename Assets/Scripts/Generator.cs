@@ -16,13 +16,14 @@ public class Generator : MonoBehaviour
     [SerializeField] private float mNoiseStrength;
     [SerializeField] private float frequency;
 
-    [SerializeField] private float octaves;
+    [SerializeField] private int octaves;
     [SerializeField] private float lacunarity;
     [SerializeField] private float persistence;
 
     [SerializeField] private float hillinessFrequency;
     [SerializeField] private float baseHeightFequency;
     [SerializeField] private float baseHeightMultiplier;
+    [SerializeField] private float baseHeight;
 
     private SimplexNoise mainTerrainNoise;
     private SimplexNoise baseHeightNoise;
@@ -35,7 +36,35 @@ public class Generator : MonoBehaviour
 
     private void Awake()
     {
-        int seed = Random.Range(int.MinValue, int.MaxValue);
+        if (GeneratorSettingsSingleton.Instance.GeneratorSettings != null)
+        {
+            if (GeneratorSettingsSingleton.Instance.useCustomSeed)
+                SetSeed(GeneratorSettingsSingleton.Instance.seed);
+            else
+                SetSeed(Random.Range(int.MinValue, int.MaxValue));
+            SetGeneratorSettings();
+        }
+        else SetSeed(Random.Range(int.MinValue, int.MaxValue));
+
+    }
+
+    private void SetGeneratorSettings()
+    {
+        mNoiseStrength = GeneratorSettingsSingleton.Instance.GeneratorSettings.NoiseStrength;
+        frequency = GeneratorSettingsSingleton.Instance.GeneratorSettings.Frequency;
+        octaves = GeneratorSettingsSingleton.Instance.GeneratorSettings.Octaves;
+        lacunarity = GeneratorSettingsSingleton.Instance.GeneratorSettings.Lacunarity;
+        persistence = GeneratorSettingsSingleton.Instance.GeneratorSettings.Persistence;
+        hillinessFrequency = GeneratorSettingsSingleton.Instance.GeneratorSettings.HillinessFrequency;
+        baseHeightFequency = GeneratorSettingsSingleton.Instance.GeneratorSettings.BaseHeightFrequency;
+        baseHeightMultiplier = GeneratorSettingsSingleton.Instance.GeneratorSettings.BaseHeightMultiplier;
+        baseHeight = GeneratorSettingsSingleton.Instance.GeneratorSettings.BaseHeight;
+
+    }
+
+    private void SetSeed(int seed)
+    {
+        Debug.Log($"Seed: {seed}");
         mainTerrainNoise = new SimplexNoise(seed);
         baseHeightNoise = new SimplexNoise(seed++);
         hillinessNoise = new SimplexNoise(seed++);
@@ -215,7 +244,7 @@ public class Generator : MonoBehaviour
         }
         // Mathf.PerlinNoise(vertPosWorld.x * frequency, vertPosWorld.z * frequency);
         noise /= divisor;
-        float worldHeight = baseHeightNoise.Evaluate(new(vertPosWorld.x * frequency * baseHeightFequency, 0f, vertPosWorld.z * frequency * baseHeightFequency)) * 25f;
+        float worldHeight = baseHeight + baseHeightNoise.Evaluate(new(vertPosWorld.x * frequency * baseHeightFequency, 0f, vertPosWorld.z * frequency * baseHeightFequency)) * baseHeightMultiplier;
         worldHeight += noise * mNoiseStrength * ((hillinessNoise.Evaluate(new(vertPosWorld.z * frequency * hillinessFrequency, 0f, vertPosWorld.x * frequency * hillinessFrequency)) + 1) / 2);
         worldHeight += 10f;
         return worldHeight;

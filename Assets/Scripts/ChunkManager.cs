@@ -91,6 +91,12 @@ public class ChunkManager : MonoBehaviour
     {
         allChunkDic = new Dictionary<Vector2Int, Chunk>();
         activeChunks = new List<Vector2Int>();
+
+        if (GeneratorSettingsSingleton.Instance.GeneratorSettings != null)
+        {
+            mChunkSize = GeneratorSettingsSingleton.Instance.GeneratorSettings.ChunkSize;
+            mResolution = GeneratorSettingsSingleton.Instance.GeneratorSettings.ChunkResolution;
+        }
     }
 
     private void Update()

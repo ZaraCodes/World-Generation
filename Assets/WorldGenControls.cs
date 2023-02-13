@@ -322,6 +322,15 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Take Screenshot"",
+                    ""type"": ""Button"",
+                    ""id"": ""37ef8d15-e0bc-4d04-8449-9803b041b9d3"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -366,6 +375,28 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard & Mouse"",
                     ""action"": ""ConfirmChat"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9ee55f23-0179-41fd-afb8-c8dba24a0e71"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Take Screenshot"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c075e7cd-f138-4fb4-9043-7d5268f05d96"",
+                    ""path"": ""<Keyboard>/f12"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Take Screenshot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -416,6 +447,7 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_ToggleChat = m_UI.FindAction("ToggleChat", throwIfNotFound: true);
         m_UI_ConfirmChat = m_UI.FindAction("ConfirmChat", throwIfNotFound: true);
+        m_UI_TakeScreenshot = m_UI.FindAction("Take Screenshot", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -566,12 +598,14 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
     private IUIActions m_UIActionsCallbackInterface;
     private readonly InputAction m_UI_ToggleChat;
     private readonly InputAction m_UI_ConfirmChat;
+    private readonly InputAction m_UI_TakeScreenshot;
     public struct UIActions
     {
         private @WorldGenControls m_Wrapper;
         public UIActions(@WorldGenControls wrapper) { m_Wrapper = wrapper; }
         public InputAction @ToggleChat => m_Wrapper.m_UI_ToggleChat;
         public InputAction @ConfirmChat => m_Wrapper.m_UI_ConfirmChat;
+        public InputAction @TakeScreenshot => m_Wrapper.m_UI_TakeScreenshot;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -587,6 +621,9 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
                 @ConfirmChat.started -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirmChat;
                 @ConfirmChat.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirmChat;
                 @ConfirmChat.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnConfirmChat;
+                @TakeScreenshot.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTakeScreenshot;
+                @TakeScreenshot.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTakeScreenshot;
+                @TakeScreenshot.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTakeScreenshot;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -597,6 +634,9 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
                 @ConfirmChat.started += instance.OnConfirmChat;
                 @ConfirmChat.performed += instance.OnConfirmChat;
                 @ConfirmChat.canceled += instance.OnConfirmChat;
+                @TakeScreenshot.started += instance.OnTakeScreenshot;
+                @TakeScreenshot.performed += instance.OnTakeScreenshot;
+                @TakeScreenshot.canceled += instance.OnTakeScreenshot;
             }
         }
     }
@@ -634,5 +674,6 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
     {
         void OnToggleChat(InputAction.CallbackContext context);
         void OnConfirmChat(InputAction.CallbackContext context);
+        void OnTakeScreenshot(InputAction.CallbackContext context);
     }
 }
