@@ -10,16 +10,17 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b52ea4dea2881cc46a9cfcf8bfb93768, type: 3}
-  m_Name: VeryFlatWorldSettings
+  m_Name: Snow Hills
   m_EditorClassIdentifier: 
-  NoiseStrength: 95
+  NoiseStrength: 40
   Frequency: 0.0625
-  Octaves: 6
+  Octaves: 5
   Lacunarity: 2
   Persistence: 0.5
-  HillinessFrequency: 0.2133333
+  HillinessFrequency: 0.4266666
   BaseHeightFrequency: 0.1
-  BaseHeightMultiplier: 25
-  BaseHeight: 0
+  BaseHeightMultiplier: 12.5
+  BaseHeight: 100
+  WaterHeight: 100
   ChunkResolution: 64
   ChunkSize: 32

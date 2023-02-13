@@ -42,7 +42,8 @@ public class PlayerScript : MonoBehaviour
         playerMovement.characterController.enabled = false;
         Vector3 newPosition = new(x, generator.EvaluateCoordinateHeight(new(x, 0, z)) + 1.1f, z);
         transform.position = newPosition;
-        if (transform.position.y < 3.5f) transform.position = new(transform.position.x, 3.5f, transform.position.z);
+        if (transform.position.y < GeneratorSettingsSingleton.Instance.GeneratorSettings.WaterHeight + 1f)
+            transform.position = new(transform.position.x, GeneratorSettingsSingleton.Instance.GeneratorSettings.WaterHeight + 1f, transform.position.z);
 
         playerMovement.characterController.enabled = true;
     }
@@ -61,9 +62,14 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerMovement.characterController.enabled = false;
         transform.position = new(Random.Range(-100, 100), 1f, Random.Range(-100, 100));
         transform.position = new(transform.position.x, generator.EvaluateCoordinateHeight(transform.position) + 1f, transform.position.z);
-        if (transform.position.y < 3.5f) transform.position = new(transform.position.x, 3.5f, transform.position.z);
+        
+        if (transform.position.y < GeneratorSettingsSingleton.Instance.GeneratorSettings.WaterHeight + 1f)
+            transform.position = new(transform.position.x, GeneratorSettingsSingleton.Instance.GeneratorSettings.WaterHeight + 1f, transform.position.z);
+
+        playerMovement.characterController.enabled = true;
     }
 
     // Update is called once per frame

@@ -16,6 +16,8 @@ public class GeneratorSettings : ScriptableObject
     public float BaseHeightMultiplier;
     public float BaseHeight;
 
+    public float WaterHeight;
+
     public int ChunkResolution;
     public int ChunkSize;
 }

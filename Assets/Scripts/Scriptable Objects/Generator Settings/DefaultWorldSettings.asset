@@ -21,5 +21,6 @@ MonoBehaviour:
   BaseHeightFrequency: 0.1
   BaseHeightMultiplier: 25
   BaseHeight: 0
+  WaterHeight: 2.5
   ChunkResolution: 64
   ChunkSize: 32

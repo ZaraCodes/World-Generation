@@ -331,6 +331,15 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pause"",
+                    ""type"": ""Button"",
+                    ""id"": ""bd6829a7-09bf-4635-b838-286304643ff6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -399,6 +408,28 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
                     ""action"": ""Take Screenshot"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""808c2527-85fa-49f6-98e2-de840c006cf1"",
+                    ""path"": """",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""379f931f-e14e-448e-8196-73fe631fd973"",
+                    ""path"": ""<Keyboard>/escape"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard & Mouse"",
+                    ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -448,6 +479,7 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
         m_UI_ToggleChat = m_UI.FindAction("ToggleChat", throwIfNotFound: true);
         m_UI_ConfirmChat = m_UI.FindAction("ConfirmChat", throwIfNotFound: true);
         m_UI_TakeScreenshot = m_UI.FindAction("Take Screenshot", throwIfNotFound: true);
+        m_UI_Pause = m_UI.FindAction("Pause", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -599,6 +631,7 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_ToggleChat;
     private readonly InputAction m_UI_ConfirmChat;
     private readonly InputAction m_UI_TakeScreenshot;
+    private readonly InputAction m_UI_Pause;
     public struct UIActions
     {
         private @WorldGenControls m_Wrapper;
@@ -606,6 +639,7 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
         public InputAction @ToggleChat => m_Wrapper.m_UI_ToggleChat;
         public InputAction @ConfirmChat => m_Wrapper.m_UI_ConfirmChat;
         public InputAction @TakeScreenshot => m_Wrapper.m_UI_TakeScreenshot;
+        public InputAction @Pause => m_Wrapper.m_UI_Pause;
         public InputActionMap Get() { return m_Wrapper.m_UI; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -624,6 +658,9 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
                 @TakeScreenshot.started -= m_Wrapper.m_UIActionsCallbackInterface.OnTakeScreenshot;
                 @TakeScreenshot.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnTakeScreenshot;
                 @TakeScreenshot.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnTakeScreenshot;
+                @Pause.started -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.performed -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
+                @Pause.canceled -= m_Wrapper.m_UIActionsCallbackInterface.OnPause;
             }
             m_Wrapper.m_UIActionsCallbackInterface = instance;
             if (instance != null)
@@ -637,6 +674,9 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
                 @TakeScreenshot.started += instance.OnTakeScreenshot;
                 @TakeScreenshot.performed += instance.OnTakeScreenshot;
                 @TakeScreenshot.canceled += instance.OnTakeScreenshot;
+                @Pause.started += instance.OnPause;
+                @Pause.performed += instance.OnPause;
+                @Pause.canceled += instance.OnPause;
             }
         }
     }
@@ -675,5 +715,6 @@ public partial class @WorldGenControls : IInputActionCollection2, IDisposable
         void OnToggleChat(InputAction.CallbackContext context);
         void OnConfirmChat(InputAction.CallbackContext context);
         void OnTakeScreenshot(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
 }

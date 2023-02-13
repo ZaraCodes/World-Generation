@@ -65,6 +65,7 @@ public class Generator : MonoBehaviour
     private void SetSeed(int seed)
     {
         Debug.Log($"Seed: {seed}");
+        GeneratorSettingsSingleton.Instance.seed = seed;
         mainTerrainNoise = new SimplexNoise(seed);
         baseHeightNoise = new SimplexNoise(seed++);
         hillinessNoise = new SimplexNoise(seed++);
@@ -95,7 +96,7 @@ public class Generator : MonoBehaviour
         { */
             GameObject waterPlane = Instantiate(waterPrefab);
             waterPlane.transform.parent = generatedTile.transform;
-            waterPlane.transform.position = new(generatedTile.transform.position.x, 2.5f, generatedTile.transform.position.z);
+            waterPlane.transform.position = new(generatedTile.transform.position.x, GeneratorSettingsSingleton.Instance.GeneratorSettings.WaterHeight, generatedTile.transform.position.z);
             waterPlane.transform.localScale = new(chunkSize, chunkSize, chunkSize);
         /*}*/
 

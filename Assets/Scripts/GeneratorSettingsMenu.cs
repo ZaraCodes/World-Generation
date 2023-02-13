@@ -13,6 +13,8 @@ public class GeneratorSettingsMenu : MonoBehaviour
     [SerializeField] private TMP_InputField seedInputField;
     [SerializeField] private TMP_Dropdown GeneratorSettingsDropdown;
 
+    [SerializeField] private TMP_Text textResponse;
+
     public GeneratorSettings selectedSettings;
 
     public void ToggleCustomGeneratorSettings()
@@ -20,8 +22,21 @@ public class GeneratorSettingsMenu : MonoBehaviour
         customGeneratorSettings.SetActive(customGeneratorSettings.activeInHierarchy);
     }
 
+    public void Init()
+    {
+        seedToggle.isOn = GeneratorSettingsSingleton.Instance.useCustomSeed;
+        if (seedToggle.isOn)
+        {
+            seedInputField.text = GeneratorSettingsSingleton.Instance.seed.ToString();
+        }
+    }
+
     public void EvaluateChosenGeneratorSettings(int selection)
     {
+        if (selection < mainMenu.generatorPresets.Length)
+        {
+            selectedSettings = mainMenu.generatorPresets[selection];
+        }
         if (selection == 2)
         {
             customGeneratorSettings.SetActive(true);
@@ -32,6 +47,19 @@ public class GeneratorSettingsMenu : MonoBehaviour
         }
     }
 
+    private void SetResponseText(string content)
+    {
+        textResponse.text = content;
+        StopCoroutine(DisableText());
+        StartCoroutine(DisableText());
+    }
+
+    private IEnumerator DisableText()
+    {
+        yield return new WaitForSeconds(4);
+        textResponse.text = string.Empty;
+    }
+
     public void ResetSeedField(bool reset)
     {
         if (!reset) seedInputField.text = string.Empty;
@@ -39,6 +67,7 @@ public class GeneratorSettingsMenu : MonoBehaviour
 
     public void ResetSettings()
     {
+        SetResponseText("Settings reset!");
         customGeneratorSettings.SetActive(false);
         seedInputField.text = string.Empty;
         seedInputField.interactable = false;
@@ -53,6 +82,7 @@ public class GeneratorSettingsMenu : MonoBehaviour
             GeneratorSettingsSingleton.Instance.seed = int.TryParse(seedInputField.text, out int seed) ? seed : 0;
             GeneratorSettingsSingleton.Instance.useCustomSeed = true;
         }
+        SetResponseText("Settings applied!");
     }
 
     public void BackToMainMenu()

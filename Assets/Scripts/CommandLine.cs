@@ -1,27 +1,22 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.InputSystem;
-using UnityEditor;
-using UnityEngine.EventSystems;
 using System.IO;
-using System.Globalization;
 
 public class CommandLine : MonoBehaviour
 {
     [SerializeField] private TMP_InputField chatText;
-
-    [SerializeField] private GameObject chat;
 
     [SerializeField] private PlayerScript player;
     // Start is called before the first frame update
 
     public void ActivateChat(InputAction.CallbackContext callbackContext)
     {
-        if (callbackContext.action.WasPerformedThisFrame() && !chat.activeInHierarchy)
+        if (callbackContext.action.WasPerformedThisFrame() && !chatText.gameObject.activeInHierarchy)
         {
-            chat.SetActive(true);
+            player.MovementEnabled = false;
+            chatText.gameObject.SetActive(true);
+            // chat.SetActive(true);
             chatText.ActivateInputField();
             chatText.Select();
             chatText.text = string.Empty;
@@ -32,18 +27,24 @@ public class CommandLine : MonoBehaviour
     {
         if (callbackContext.action.WasPerformedThisFrame())
         {
-            if (chat.activeInHierarchy)
+            if (chatText.gameObject.activeInHierarchy)
             {
                 chatText.ReleaseSelection();
 
                 print(chatText.text);
                 EvaluateCommand(chatText.text);
-                chatText.text = string.Empty;
-
-                chatText.DeactivateInputField();
-                chat.SetActive(false);
+                HideChat();
+                player.MovementEnabled = true;
             }
         }
+    }
+
+    public void HideChat()
+    {
+        chatText.text = string.Empty;
+
+        chatText.DeactivateInputField();
+        chatText.gameObject.SetActive(false);
     }
 
     public void TakeScreenshot(InputAction.CallbackContext callbackContext)
@@ -69,7 +70,16 @@ public class CommandLine : MonoBehaviour
         switch (splitCommand[0])
         {
             case "tp": EvalTP(splitCommand); break;
+            case "seed": EvalSeed(splitCommand); break;
             default: return;
+        }
+    }
+
+    private void EvalSeed(string[] args)
+    {
+        if (args.Length == 1)
+        {
+            Debug.Log(GeneratorSettingsSingleton.Instance.seed);
         }
     }
 

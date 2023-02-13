@@ -67,7 +67,7 @@ public class ChunkManager : MonoBehaviour
         }
         activeChunks = newActiveChunks;
     }
-
+    
     public class Chunk
     {
         GameObject chunkObj;
