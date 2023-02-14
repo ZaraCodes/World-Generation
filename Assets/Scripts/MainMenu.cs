@@ -33,4 +33,12 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
         #endif
     }
+
+    private void Awake()
+    {
+        if (GeneratorSettingsSingleton.Instance.GeneratorSettings != null)
+        {
+            currentSettings = GeneratorSettingsSingleton.Instance.GeneratorSettings;
+        }
+    }
 }

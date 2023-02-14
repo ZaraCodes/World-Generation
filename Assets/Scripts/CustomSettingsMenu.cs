@@ -18,6 +18,7 @@ public class CustomSettingsMenu : MonoBehaviour
     [SerializeField] private TMP_InputField baseHeightFrequency;
     [SerializeField] private TMP_InputField baseHeightMultiplier;
     [SerializeField] private TMP_InputField baseHeight;
+    [SerializeField] private TMP_InputField waterHeight;
     [SerializeField] private TMP_InputField chunkResolution;
     [SerializeField] private TMP_InputField chunkSize;
 
@@ -25,21 +26,23 @@ public class CustomSettingsMenu : MonoBehaviour
 
     private void InitInputFields()
     {
-        noiseStrength.text = defaultSettings.NoiseStrength.ToString();
-        frequency.text = defaultSettings.Frequency.ToString();
-        octaves.text = defaultSettings.Octaves.ToString();
-        lacunarity.text = defaultSettings.Lacunarity.ToString();
-        persistence.text = defaultSettings.Persistence.ToString();
-        hillinessFrequency.text = defaultSettings.HillinessFrequency.ToString();
-        baseHeightFrequency.text = defaultSettings.BaseHeightFrequency.ToString();
-        baseHeightMultiplier.text = defaultSettings.BaseHeightMultiplier.ToString();
-        baseHeight.text = defaultSettings.BaseHeight.ToString();
-        chunkResolution.text = defaultSettings.ChunkResolution.ToString();
-        chunkSize.text = defaultSettings.ChunkSize.ToString();
+        noiseStrength.text = settingsMenu.selectedSettings.NoiseStrength.ToString();
+        frequency.text = settingsMenu.selectedSettings.Frequency.ToString();
+        octaves.text = settingsMenu.selectedSettings.Octaves.ToString();
+        lacunarity.text = settingsMenu.selectedSettings.Lacunarity.ToString();
+        persistence.text = settingsMenu.selectedSettings.Persistence.ToString();
+        hillinessFrequency.text = settingsMenu.selectedSettings.HillinessFrequency.ToString();
+        baseHeightFrequency.text = settingsMenu.selectedSettings.BaseHeightFrequency.ToString();
+        baseHeightMultiplier.text = settingsMenu.selectedSettings.BaseHeightMultiplier.ToString();
+        baseHeight.text = settingsMenu.selectedSettings.BaseHeight.ToString();
+        waterHeight.text = settingsMenu.selectedSettings.WaterHeight.ToString();
+        chunkResolution.text = settingsMenu.selectedSettings.ChunkResolution.ToString();
+        chunkSize.text = settingsMenu.selectedSettings.ChunkSize.ToString();
     }
 
     public void ResetSettings()
     {
+        settingsMenu.selectedSettings = settingsMenu.mainMenu.generatorPresets[settingsMenu.selectedPreset];
         InitInputFields();
         SetResponseText("Settings reset!");
     }
@@ -76,6 +79,7 @@ public class CustomSettingsMenu : MonoBehaviour
             settings.BaseHeightFrequency = float.Parse(baseHeightFrequency.text);
             settings.BaseHeightMultiplier = float.Parse(baseHeightMultiplier.text);
             settings.BaseHeight = float.Parse(baseHeight.text);
+            settings.WaterHeight = float.Parse(waterHeight.text);
             settings.ChunkResolution = int.Parse(chunkResolution.text);
             settings.ChunkSize = int.Parse(chunkSize.text);
 

@@ -24,4 +24,6 @@ public class GeneratorSettingsSingleton
     public bool useCustomSeed;
 
     public GeneratorSettings GeneratorSettings;
+
+    public int SelectedPresetIdx = 0;
 }

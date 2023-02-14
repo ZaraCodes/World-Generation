@@ -2,20 +2,23 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Rendering;
 using UnityEngine.UI;
 
 public class GeneratorSettingsMenu : MonoBehaviour
 {
-    [SerializeField] private MainMenu mainMenu;
+    public MainMenu mainMenu;
     [SerializeField] private GameObject customGeneratorSettings;
 
     [SerializeField] private Toggle seedToggle;
     [SerializeField] private TMP_InputField seedInputField;
-    [SerializeField] private TMP_Dropdown GeneratorSettingsDropdown;
+    [SerializeField] private TMP_Dropdown worldTypeSelector;
 
     [SerializeField] private TMP_Text textResponse;
 
     public GeneratorSettings selectedSettings;
+
+    public int selectedPreset;
 
     public void ToggleCustomGeneratorSettings()
     {
@@ -24,11 +27,14 @@ public class GeneratorSettingsMenu : MonoBehaviour
 
     public void Init()
     {
+        selectedSettings = mainMenu.currentSettings;
         seedToggle.isOn = GeneratorSettingsSingleton.Instance.useCustomSeed;
         if (seedToggle.isOn)
         {
             seedInputField.text = GeneratorSettingsSingleton.Instance.seed.ToString();
+            seedInputField.interactable = true;
         }
+        worldTypeSelector.value = GeneratorSettingsSingleton.Instance.SelectedPresetIdx;
     }
 
     public void EvaluateChosenGeneratorSettings(int selection)
@@ -36,8 +42,10 @@ public class GeneratorSettingsMenu : MonoBehaviour
         if (selection < mainMenu.generatorPresets.Length)
         {
             selectedSettings = mainMenu.generatorPresets[selection];
+            selectedPreset = selection;
         }
-        if (selection == 2)
+        GeneratorSettingsSingleton.Instance.SelectedPresetIdx = selection;
+        if (selection == mainMenu.generatorPresets.Length)
         {
             customGeneratorSettings.SetActive(true);
         }
@@ -72,9 +80,14 @@ public class GeneratorSettingsMenu : MonoBehaviour
         seedInputField.text = string.Empty;
         seedInputField.interactable = false;
         seedToggle.isOn = false;
+        GeneratorSettingsSingleton.Instance.useCustomSeed = false;
+        GeneratorSettingsSingleton.Instance.SelectedPresetIdx = 0;
+        worldTypeSelector.value = 0;
+        selectedSettings = mainMenu.generatorPresets[0];
+        ApplySettings(false);
     }
 
-    public void ApplySettings()
+    public void ApplySettings(bool showText)
     {
         mainMenu.currentSettings = selectedSettings;
         if (seedToggle.isOn)
@@ -82,12 +95,17 @@ public class GeneratorSettingsMenu : MonoBehaviour
             GeneratorSettingsSingleton.Instance.seed = int.TryParse(seedInputField.text, out int seed) ? seed : 0;
             GeneratorSettingsSingleton.Instance.useCustomSeed = true;
         }
-        SetResponseText("Settings applied!");
+        if (showText) SetResponseText("Settings applied!");
     }
 
     public void BackToMainMenu()
     {
         mainMenu.gameObject.SetActive(true);
         gameObject.SetActive(false);
+    }
+
+    private void OnEnable()
+    {
+        Init();
     }
 }
