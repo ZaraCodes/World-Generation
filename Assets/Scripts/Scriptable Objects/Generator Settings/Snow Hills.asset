@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NoiseStrength: 40
   Frequency: 0.0625
-  Octaves: 5
+  Octaves: 10
   Lacunarity: 2
   Persistence: 0.5
   HillinessFrequency: 0.4266666
