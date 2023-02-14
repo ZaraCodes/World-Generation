@@ -14,13 +14,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   NoiseStrength: 95
   Frequency: 0.0625
-  Octaves: 10
+  Octaves: 8
   Lacunarity: 2
   Persistence: 0.5
   HillinessFrequency: 0.2133333
   BaseHeightFrequency: 0.1
+  ForestThreshhold: 0.6
+  ForestFrequency: 0.004
   BaseHeightMultiplier: 25
-  BaseHeight: -25
+  BaseHeight: -15
   WaterHeight: 2.5
   ChunkResolution: 64
   ChunkSize: 32

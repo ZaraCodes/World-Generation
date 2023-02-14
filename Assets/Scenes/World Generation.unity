@@ -1242,6 +1242,8 @@ MonoBehaviour:
   octaves: 6
   lacunarity: 2
   persistence: 0.5
+  forestThreshhold: 0.6
+  forestFrequency: 0.004
   hillinessFrequency: 0.21333334
   baseHeightFequency: 0.1
   baseHeightMultiplier: 25

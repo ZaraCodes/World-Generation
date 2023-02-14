@@ -20,6 +20,9 @@ public class Generator : MonoBehaviour
     [SerializeField] private float lacunarity;
     [SerializeField] private float persistence;
 
+    [SerializeField] private float forestThreshhold;
+    [SerializeField] private float forestFrequency;
+
     [SerializeField] private float hillinessFrequency;
     [SerializeField] private float baseHeightFequency;
     [SerializeField] private float baseHeightMultiplier;
@@ -55,6 +58,8 @@ public class Generator : MonoBehaviour
         octaves = GeneratorSettingsSingleton.Instance.GeneratorSettings.Octaves;
         lacunarity = GeneratorSettingsSingleton.Instance.GeneratorSettings.Lacunarity;
         persistence = GeneratorSettingsSingleton.Instance.GeneratorSettings.Persistence;
+        forestFrequency = GeneratorSettingsSingleton.Instance.GeneratorSettings.ForestFrequency;
+        forestThreshhold= GeneratorSettingsSingleton.Instance.GeneratorSettings.ForestThreshhold;
         hillinessFrequency = GeneratorSettingsSingleton.Instance.GeneratorSettings.HillinessFrequency;
         baseHeightFequency = GeneratorSettingsSingleton.Instance.GeneratorSettings.BaseHeightFrequency;
         baseHeightMultiplier = GeneratorSettingsSingleton.Instance.GeneratorSettings.BaseHeightMultiplier;
@@ -115,9 +120,9 @@ public class Generator : MonoBehaviour
                 Vector3 vertPosLocal = cornerPos + new Vector3(x, 0, z);
                 Vector3 vertPosWorld = generatedTile.transform.position + vertPosLocal;
 
-                float noiseResult = (woodinessNoise.Evaluate(new Vector3(vertPosWorld.x, 0, vertPosWorld.z) * 0.004f) + 1) / 2;
+                float noiseResult = (woodinessNoise.Evaluate(new Vector3(vertPosWorld.x, 0, vertPosWorld.z) * forestFrequency) + 1) / 2;
 
-                if (noiseResult > 0.6f && Random.Range(0.6f, 1f) <= noiseResult)
+                if (noiseResult > forestThreshhold && Random.Range(forestThreshhold, 1f) <= noiseResult)
                 {
                     Vector3 treePos = new(Random.Range(vertPosWorld.x - 1.3f, vertPosWorld.x + 1.3f), 0f, Random.Range(vertPosWorld.z - 1.3f, vertPosWorld.z + 1.3f));
                     treePos.y = EvaluateCoordinateHeight(treePos);
@@ -243,11 +248,11 @@ public class Generator : MonoBehaviour
             noise += mainTerrainNoise.Evaluate(new(vertPosWorld.x * Mathf.Pow(lacunarity, i) * frequency, 0f, vertPosWorld.z * Mathf.Pow(lacunarity, i) * frequency)) * Mathf.Pow(persistence, i);
             divisor += Mathf.Pow(persistence, i);
         }
-        // Mathf.PerlinNoise(vertPosWorld.x * frequency, vertPosWorld.z * frequency);
+
         noise /= divisor;
         float worldHeight = baseHeight + baseHeightNoise.Evaluate(new(vertPosWorld.x * frequency * baseHeightFequency, 0f, vertPosWorld.z * frequency * baseHeightFequency)) * baseHeightMultiplier;
         worldHeight += noise * mNoiseStrength * ((hillinessNoise.Evaluate(new(vertPosWorld.z * frequency * hillinessFrequency, 0f, vertPosWorld.x * frequency * hillinessFrequency)) + 1) / 2);
-        worldHeight += 10f;
+
         return worldHeight;
     }
 }

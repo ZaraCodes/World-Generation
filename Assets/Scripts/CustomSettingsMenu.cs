@@ -14,6 +14,8 @@ public class CustomSettingsMenu : MonoBehaviour
     [SerializeField] private TMP_InputField octaves;
     [SerializeField] private TMP_InputField lacunarity;
     [SerializeField] private TMP_InputField persistence;
+    [SerializeField] private TMP_InputField forestThreshhold;
+    [SerializeField] private TMP_InputField forestFrequency;
     [SerializeField] private TMP_InputField hillinessFrequency;
     [SerializeField] private TMP_InputField baseHeightFrequency;
     [SerializeField] private TMP_InputField baseHeightMultiplier;
@@ -31,6 +33,8 @@ public class CustomSettingsMenu : MonoBehaviour
         octaves.text = settingsMenu.selectedSettings.Octaves.ToString();
         lacunarity.text = settingsMenu.selectedSettings.Lacunarity.ToString();
         persistence.text = settingsMenu.selectedSettings.Persistence.ToString();
+        forestThreshhold.text = settingsMenu.selectedSettings.ForestThreshhold.ToString();
+        forestFrequency.text = settingsMenu.selectedSettings.ForestFrequency.ToString();
         hillinessFrequency.text = settingsMenu.selectedSettings.HillinessFrequency.ToString();
         baseHeightFrequency.text = settingsMenu.selectedSettings.BaseHeightFrequency.ToString();
         baseHeightMultiplier.text = settingsMenu.selectedSettings.BaseHeightMultiplier.ToString();
@@ -75,6 +79,8 @@ public class CustomSettingsMenu : MonoBehaviour
             settings.Octaves = int.Parse(octaves.text);
             settings.Lacunarity = float.Parse(lacunarity.text);
             settings.Persistence = float.Parse(persistence.text);
+            settings.ForestThreshhold = float.Parse(forestThreshhold.text);
+            settings.ForestFrequency = float.Parse(forestFrequency.text);
             settings.HillinessFrequency = float.Parse(hillinessFrequency.text);
             settings.BaseHeightFrequency = float.Parse(baseHeightFrequency.text);
             settings.BaseHeightMultiplier = float.Parse(baseHeightMultiplier.text);

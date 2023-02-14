@@ -13,6 +13,10 @@ public class GeneratorSettings : ScriptableObject
 
     public float HillinessFrequency;
     public float BaseHeightFrequency;
+
+    public float ForestThreshhold;
+    public float ForestFrequency;
+
     public float BaseHeightMultiplier;
     public float BaseHeight;
 
