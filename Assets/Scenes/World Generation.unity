@@ -1950,11 +1950,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 48809620f5eeee648846435f1704cb20, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mGenerator: {fileID: 1275402835}
-  mViewer: {fileID: 1738810542}
-  mRenderDistance: 12
-  mChunkSize: 32
-  mResolution: 64
+  generator: {fileID: 1275402835}
+  viewerTransform: {fileID: 1738810542}
+  renderDistance: 12
+  chunkSize: 64
+  resolution: 32
 --- !u!4 &1720179945
 Transform:
   m_ObjectHideFlags: 0

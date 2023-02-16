@@ -67,7 +67,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     /// <summary>Toggles crouching by an input by the player</summary>
-    /// <param name="callbackContext"></param>
+    /// <param name="callbackContext">Callback context of the input action</param>
     public void ToggleCrouch(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.action.WasPerformedThisFrame())
@@ -83,6 +83,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>Toggles the leaning left action</summary>
+    /// <param name="callbackContext">Callback context of the input action</param>
     public void ToggleLeanLeft(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.action.WasPerformedThisFrame())
@@ -95,6 +97,8 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    /// <summary>Toggles the leaning right action</summary>
+    /// <param name="callbackContext">Callback context of the input action</param>
     public void ToggleLeanRight(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.action.WasPerformedThisFrame())

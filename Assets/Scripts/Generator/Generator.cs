@@ -7,35 +7,72 @@ using UnityEngine;
 
 public class Generator : MonoBehaviour
 {
+    /// <summary>Bool that decides if chunks get generated in a threaded way or not</summary>
     [SerializeField] private bool threaded;
+
+    /// <summary>How many iterations of the outer for loop for generating a mesh will get calculated inside a thread instead</summary>
     [SerializeField] private int threadIterations;
 
+    /// <summary>Reference to the water prefab</summary>
     [SerializeField] private GameObject waterPrefab;
+
+    /// <summary>Reference to the tree prefab</summary>
     [SerializeField] private GameObject treePrefab;
+
+    /// <summary>Reference to the material that gets applied to the mesh</summary>
     [SerializeField] private Material mDefaultMaterial;
+
+    /// <summary>The strength that the resulting noise gets multiplied by</summary>
     [SerializeField] private float mNoiseStrength;
+
+    /// <summary>The frequency of the noise</summary>
     [SerializeField] private float frequency;
 
+    /// <summary>How often a noise gets layered to get a more varied result</summary>
     [SerializeField] private int octaves;
+
+    /// <summary>Factor that scales each octave by this value down</summary>
     [SerializeField] private float lacunarity;
+
+    /// <summary>Factor that reduces each octaves influence on the resulting noise</summary>
     [SerializeField] private float persistence;
 
+    /// <summary>
+    /// The noise for forests returns a value between 0 and 1. This value therefore has to be between these two values and can 
+    /// make a tree appear if the calculated value is bigger than this threshhold.
+    /// </summary>
     [SerializeField] private float forestThreshhold;
+
+    /// <summary>Frequency of the forest noise</summary>
     [SerializeField] private float forestFrequency;
 
+    /// <summary>The hilliness noise decides how much of the base noise gets applied. The hilliness frequency decides how big hilly and flat areas are.</summary>
     [SerializeField] private float hillinessFrequency;
+
+    /// <summary>Frequency of the base height noise</summary>
     [SerializeField] private float baseHeightFequency;
+
+    /// <summary>Sets how high the base height noise will be</summary>
     [SerializeField] private float baseHeightMultiplier;
+
+    /// <summary>Base height that all other noise gets added to</summary>
     [SerializeField] private float baseHeight;
 
+    /// <summary>Noise for the main terrain</summary>
     private SimplexNoise mainTerrainNoise;
+    
+    /// <summary>Noise for the base height</summary>
     private SimplexNoise baseHeightNoise;
+
+    /// <summary>Noise for the hilliness</summary>
     private SimplexNoise hillinessNoise;
+
+    /// <summary>Noise for forests</summary>
     private SimplexNoise woodinessNoise;
 
+    /// <summary>Generated mesh</summary>
     private Mesh mesh;
 
-    private float minHeight;
 
     private void Awake()
     {
@@ -51,6 +88,7 @@ public class Generator : MonoBehaviour
 
     }
 
+    /// <summary>Initializes the generator</summary>
     private void SetGeneratorSettings()
     {
         mNoiseStrength = GeneratorSettingsSingleton.Instance.GeneratorSettings.NoiseStrength;
@@ -59,7 +97,7 @@ public class Generator : MonoBehaviour
         lacunarity = GeneratorSettingsSingleton.Instance.GeneratorSettings.Lacunarity;
         persistence = GeneratorSettingsSingleton.Instance.GeneratorSettings.Persistence;
         forestFrequency = GeneratorSettingsSingleton.Instance.GeneratorSettings.ForestFrequency;
-        forestThreshhold= GeneratorSettingsSingleton.Instance.GeneratorSettings.ForestThreshhold;
+        forestThreshhold = GeneratorSettingsSingleton.Instance.GeneratorSettings.ForestThreshhold;
         hillinessFrequency = GeneratorSettingsSingleton.Instance.GeneratorSettings.HillinessFrequency;
         baseHeightFequency = GeneratorSettingsSingleton.Instance.GeneratorSettings.BaseHeightFrequency;
         baseHeightMultiplier = GeneratorSettingsSingleton.Instance.GeneratorSettings.BaseHeightMultiplier;
@@ -67,9 +105,10 @@ public class Generator : MonoBehaviour
 
     }
 
+    /// <summary>Sets the seeds for the different noises</summary>
+    /// <param name="seed">the seed duh</param>
     private void SetSeed(int seed)
     {
-        Debug.Log($"Seed: {seed}");
         GeneratorSettingsSingleton.Instance.seed = seed;
         mainTerrainNoise = new SimplexNoise(seed);
         baseHeightNoise = new SimplexNoise(seed++);
@@ -77,6 +116,12 @@ public class Generator : MonoBehaviour
         woodinessNoise = new SimplexNoise(seed++);
     }
 
+    /// <summary>Generates a chunk</summary>
+    /// <param name="rootPos">Root position of the chunk</param>
+    /// <param name="resolution">Resolution of the chunk</param>
+    /// <param name="chunkSize">Size of the chunk</param>
+    /// <param name="parent">The object this chunk will get attached to</param>
+    /// <returns>The generated chunk</returns>
     public GameObject GenerateNoiseMeshObject(Vector3 rootPos, int resolution, float chunkSize, Transform parent)
     {
         GameObject generatedTile = new();
@@ -97,19 +142,19 @@ public class Generator : MonoBehaviour
         GenerateMesh(rootPos, resolution, chunkSize);
         tileCollider.sharedMesh = mesh;
 
-        /* if (minHeight < 2.5f)
-        { */
-            GameObject waterPlane = Instantiate(waterPrefab);
-            waterPlane.transform.parent = generatedTile.transform;
-            waterPlane.transform.position = new(generatedTile.transform.position.x, GeneratorSettingsSingleton.Instance.GeneratorSettings.WaterHeight, generatedTile.transform.position.z);
-            waterPlane.transform.localScale = new(chunkSize, chunkSize, chunkSize);
-        /*}*/
+        GameObject waterPlane = Instantiate(waterPrefab);
+        waterPlane.transform.parent = generatedTile.transform;
+        waterPlane.transform.position = new(generatedTile.transform.position.x, GeneratorSettingsSingleton.Instance.GeneratorSettings.WaterHeight, generatedTile.transform.position.z);
+        waterPlane.transform.localScale = new(chunkSize, chunkSize, chunkSize);
 
         PlaceTrees(generatedTile, chunkSize);
 
         return generatedTile;
     }
 
+    /// <summary>Places trees on the chunk</summary>
+    /// <param name="generatedTile">The chunk</param>
+    /// <param name="chunkSize">The size of the chunk</param>
     private void PlaceTrees(GameObject generatedTile, float chunkSize)
     {
         Vector3 cornerPos = new Vector3(-chunkSize / 2f, 0f, -chunkSize / 2f);
@@ -137,11 +182,14 @@ public class Generator : MonoBehaviour
                 }
             }
         }
-    }    
-
+    }
+    
+    /// <summary>Generates the chunk mesh</summary>
+    /// <param name="rootPos">Root position of the chunk</param>
+    /// <param name="resolution">Resolution of the chunk</param>
+    /// <param name="size">Size of the chunk</param>
     private void GenerateMesh(Vector3 rootPos, int resolution, float size)
     {
-        minHeight = 10000f;
         Vector3[] verts = new Vector3[(resolution + 1) * (resolution + 1)];
         int[] tris = new int[resolution * resolution * 2 * 3];
 
@@ -170,11 +218,32 @@ public class Generator : MonoBehaviour
         mesh.RecalculateNormals();
     }
 
+    /// <summary>Starts a thread for threaded chunk generation</summary>
+    /// <param name="rootPos">Root position of the chunk</param>
+    /// <param name="resolution">Resolution of the chunk</param>
+    /// <param name="size">Size of the chunk</param>
+    /// <param name="verts">Array of all verts for this chunk</param>
+    /// <param name="tris">Array of all tris for this chunk</param>
+    /// <param name="cornerPos">Corner position of the chunk</param>
+    /// <param name="y">y parameter of the outer for loop</param>
+    /// <param name="vertIdx">vertIdx from the outer for loop</param>
+    /// <param name="triIdx">triIdx from the outer for loop</param>
+    /// <returns>A task</returns>
     private Task StartInnerForThread(Vector3 rootPos, int resolution, float size, Vector3[] verts, int[] tris, Vector3 cornerPos, int y, int vertIdx, int triIdx)
     {
         return Task.Run(() => InnerForLoopThreaded(rootPos, resolution, size, verts, tris, cornerPos, y, vertIdx, triIdx));
     }
 
+    /// <summary>generates a chunk in a non threaded way</summary>
+    /// <param name="rootPos">Root position of the chunk</param>
+    /// <param name="resolution">Resolution of the chunk</param>
+    /// <param name="size">Size of the chunk</param>
+    /// <param name="verts">Array of all verts for this chunk</param>
+    /// <param name="tris">Array of all tris for this chunk</param>
+    /// <param name="cornerPos">Corner position of the chunk</param>
+    /// <param name="y">y parameter of the outer for loop</param>
+    /// <param name="vertIdx">vertIdx from the outer for loop</param>
+    /// <param name="triIdx">triIdx from the outer for loop</param>
     private void InnerForLoopNormal(Vector3 rootPos, int resolution, float size, Vector3[] verts, int[] tris, Vector3 cornerPos, int y, int vertIdx, int triIdx)
     {
         for (int x = 0; x <= resolution; x++, vertIdx++)
@@ -183,10 +252,8 @@ public class Generator : MonoBehaviour
             Vector3 vertPosWorld = rootPos + vertPosLocal;
 
             vertPosLocal.y = EvaluateCoordinateHeight(vertPosWorld);
-            // if (vertPosLocal.y < minHeight) minHeight = vertPosLocal.y;
 
             if (vertIdx < verts.Length) verts[vertIdx] = vertPosLocal;
-            // else Debug.Log($"vIdx: {vertIdx} x: {x} y: {y}");
 
             if (x < resolution && y < resolution)
             {
@@ -203,6 +270,16 @@ public class Generator : MonoBehaviour
         }
     }
 
+    /// <summary>Generates a chunk in a threded way</summary>
+    /// <param name="rootPos">Root position of the chunk</param>
+    /// <param name="resolution">Resolution of the chunk</param>
+    /// <param name="size">Size of the chunk</param>
+    /// <param name="verts">Array of all verts for this chunk</param>
+    /// <param name="tris">Array of all tris for this chunk</param>
+    /// <param name="cornerPos">Corner position of the chunk</param>
+    /// <param name="y">y parameter of the outer for loop</param>
+    /// <param name="vertIdx">vertIdx from the outer for loop</param>
+    /// <param name="triIdx">triIdx from the outer for loop</param>
     private void InnerForLoopThreaded(Vector3 rootPos, int resolution, float size, Vector3[] verts, int[] tris, Vector3 cornerPos, int y, int vertIdx, int triIdx)
     {
         for (int i = 0; i < threadIterations; i++)
@@ -237,21 +314,24 @@ public class Generator : MonoBehaviour
         }
     }
 
-    public float EvaluateCoordinateHeight(Vector3 vertPosWorld)
+    /// <summary>Calculates the height of the terrain at a certain point</summary>
+    /// <param name="position">Position in the world</param>
+    /// <returns>The height of the terrain</returns>
+    public float EvaluateCoordinateHeight(Vector3 position)
     {
-        vertPosWorld /= 13;
+        position /= 13;
 
         float noise = 0;
         float divisor = 0;
         for (int i = 0; i < octaves; i++)
         {
-            noise += mainTerrainNoise.Evaluate(new(vertPosWorld.x * Mathf.Pow(lacunarity, i) * frequency, 0f, vertPosWorld.z * Mathf.Pow(lacunarity, i) * frequency)) * Mathf.Pow(persistence, i);
+            noise += mainTerrainNoise.Evaluate(new(position.x * Mathf.Pow(lacunarity, i) * frequency, 0f, position.z * Mathf.Pow(lacunarity, i) * frequency)) * Mathf.Pow(persistence, i);
             divisor += Mathf.Pow(persistence, i);
         }
 
         noise /= divisor;
-        float worldHeight = baseHeight + baseHeightNoise.Evaluate(new(vertPosWorld.x * frequency * baseHeightFequency, 0f, vertPosWorld.z * frequency * baseHeightFequency)) * baseHeightMultiplier;
-        worldHeight += noise * mNoiseStrength * ((hillinessNoise.Evaluate(new(vertPosWorld.z * frequency * hillinessFrequency, 0f, vertPosWorld.x * frequency * hillinessFrequency)) + 1) / 2);
+        float worldHeight = baseHeight + baseHeightNoise.Evaluate(new(position.x * frequency * baseHeightFequency, 0f, position.z * frequency * baseHeightFequency)) * baseHeightMultiplier;
+        worldHeight += noise * mNoiseStrength * ((hillinessNoise.Evaluate(new(position.z * frequency * hillinessFrequency, 0f, position.x * frequency * hillinessFrequency)) + 1) / 2);
 
         return worldHeight;
     }

@@ -5,11 +5,15 @@ using System.IO;
 
 public class CommandLine : MonoBehaviour
 {
+    /// <summary>Reference to the text field of the command line</summary>
     [SerializeField] private TMP_InputField chatText;
 
+    /// <summary>Reference to the player</summary>
     [SerializeField] private PlayerScript player;
     // Start is called before the first frame update
 
+    /// <summary>Enables and makes the command line visible</summary>
+    /// <param name="callbackContext">Callback context of the input action</param>
     public void ActivateChat(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.action.WasPerformedThisFrame() && !chatText.gameObject.activeInHierarchy)
@@ -23,6 +27,8 @@ public class CommandLine : MonoBehaviour
         }
     }
 
+    /// <summary>Confirms the command and closes the command line</summary>
+    /// <param name="callbackContext">Callback context of the input action</param>
     public void ConfirmChat(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.action.WasPerformedThisFrame())
@@ -39,6 +45,7 @@ public class CommandLine : MonoBehaviour
         }
     }
 
+    /// <summary>Makes the command line invisible</summary>
     public void HideChat()
     {
         chatText.text = string.Empty;
@@ -47,6 +54,8 @@ public class CommandLine : MonoBehaviour
         chatText.gameObject.SetActive(false);
     }
 
+    /// <summary>Takes a screenshot and saves it in the user folder</summary>
+    /// <param name="callbackContext">Callback context of the input action</param>
     public void TakeScreenshot(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.action.WasPerformedThisFrame())
@@ -59,11 +68,16 @@ public class CommandLine : MonoBehaviour
         }
     }
 
+    /// <summary>Fills up a time string to two digits</summary>
+    /// <param name="time">The input value</param>
+    /// <returns>The modified string</returns>
     private string TrimTime(int time)
     {
         return time.ToString().PadLeft(2, '0');
     }
 
+    /// <summary>Evaluates the user's input</summary>
+    /// <param name="command">The user's input</param>
     private void EvaluateCommand(string command)
     {
         string[] splitCommand = command.Split(' ');
@@ -75,21 +89,27 @@ public class CommandLine : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Executes the "seed" command by copying the seed to the clipboard
+    /// </summary>
+    /// <param name="args">the user's input</param>
     private void EvalSeed(string[] args)
     {
         if (args.Length == 1)
         {
-            Debug.Log(GeneratorSettingsSingleton.Instance.seed);
+            GUIUtility.systemCopyBuffer = GeneratorSettingsSingleton.Instance.seed.ToString();
         }
     }
 
+    /// <summary>Executes the teleport command</summary>
+    /// <param name="args">The user's input</param>
     private void EvalTP(string[] args)
     {
         if (args.Length == 3)
         {
             if (float.TryParse(args[1], out float x))
             {
-                if (int.TryParse(args[2], out int z))
+                if (float.TryParse(args[2], out float z))
                 {
                     player.Teleport(x, z);
                 }

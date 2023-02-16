@@ -7,10 +7,17 @@ using UnityEngine.SceneManagement;
 
 public class PauseMenu : MonoBehaviour
 {
+    /// <summary>Reference to the pause menu gameobject</summary>
     [SerializeField] private GameObject pauseMenu;
+
+    /// <summary>Reference to the command line</summary>
     [SerializeField] private TMP_InputField commandLine;
+
+    /// <summary>Reference to the player</summary>
     [SerializeField] private PlayerScript player;
 
+    /// <summary>Opens/Closes the pause menu</summary>
+    /// <param name="callbackContext">Callback context of the input action</param>
     public void TogglePauseMenu(InputAction.CallbackContext callbackContext)
     {
         if (callbackContext.action.WasPerformedThisFrame())
@@ -33,6 +40,7 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    /// <summary>Closes the pause menu</summary>
     public void ClosePauseMenu()
     {
         if (pauseMenu.activeInHierarchy)
@@ -43,11 +51,13 @@ public class PauseMenu : MonoBehaviour
         }
     }
 
+    /// <summary>Quits back to the main menu</summary>
     public void GoToMainMenu()
     {
         SceneManager.LoadScene(0);
     }
 
+    /// <summary>Reloads the world generator scene with the current generator settings</summary>
     public void RegenerateWorld()
     {
         SceneManager.LoadScene(1);
