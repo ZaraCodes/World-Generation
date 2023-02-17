@@ -88,6 +88,23 @@ public class Generator : MonoBehaviour
 
     }
 
+    public void GeneratePreviewChunk(MainMenu mainMenu)
+    {
+        try
+        {
+            Destroy(transform.GetChild(0).gameObject);
+        }
+        catch { Debug.Log("meow"); }
+        if (GeneratorSettingsSingleton.Instance.useCustomSeed)
+            SetSeed(GeneratorSettingsSingleton.Instance.seed);
+        else
+            SetSeed(Random.Range(int.MinValue, int.MaxValue));
+        Vector3 position = new(500, 0, 500);
+        GeneratorSettingsSingleton.Instance.GeneratorSettings = mainMenu.currentSettings;
+        SetGeneratorSettings();
+        GameObject chunk = GenerateNoiseMeshObject(position, GeneratorSettingsSingleton.Instance.GeneratorSettings.ChunkResolution, GeneratorSettingsSingleton.Instance.GeneratorSettings.ChunkSize, transform);
+    }
+
     /// <summary>Initializes the generator</summary>
     private void SetGeneratorSettings()
     {
@@ -102,7 +119,6 @@ public class Generator : MonoBehaviour
         baseHeightFequency = GeneratorSettingsSingleton.Instance.GeneratorSettings.BaseHeightFrequency;
         baseHeightMultiplier = GeneratorSettingsSingleton.Instance.GeneratorSettings.BaseHeightMultiplier;
         baseHeight = GeneratorSettingsSingleton.Instance.GeneratorSettings.BaseHeight;
-
     }
 
     /// <summary>Sets the seeds for the different noises</summary>

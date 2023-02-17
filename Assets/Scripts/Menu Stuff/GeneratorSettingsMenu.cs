@@ -51,7 +51,7 @@ public class GeneratorSettingsMenu : MonoBehaviour
     }
 
     /// <summary>Evaluates the choses selection of the generator preset selector</summary>
-    /// <param name="selection"></param>
+    /// <param name="selection">the selected parameter</param>
     public void EvaluateChosenGeneratorSettings(int selection)
     {
         if (selection < mainMenu.generatorPresets.Length)
@@ -118,6 +118,10 @@ public class GeneratorSettingsMenu : MonoBehaviour
         {
             GeneratorSettingsSingleton.Instance.seed = int.TryParse(seedInputField.text, out int seed) ? seed : 0;
             GeneratorSettingsSingleton.Instance.useCustomSeed = true;
+        } 
+        else
+        {
+            GeneratorSettingsSingleton.Instance.useCustomSeed = false;
         }
         if (showText) SetResponseText("Settings applied!");
     }

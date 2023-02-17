@@ -22,7 +22,7 @@ MonoBehaviour:
   ForestThreshhold: 0.6
   ForestFrequency: 0.004
   BaseHeightMultiplier: 12.5
-  BaseHeight: 100
-  WaterHeight: 100
+  BaseHeight: 75
+  WaterHeight: 75
   ChunkResolution: 64
   ChunkSize: 32
