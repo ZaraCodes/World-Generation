@@ -13,10 +13,16 @@ public class CustomSettingsMenu : MonoBehaviour
     [SerializeField] private GeneratorSettings defaultSettings;
 
     /// <summary>Reference to the noise strength input field</summary>
-    [SerializeField] private TMP_InputField noiseStrength;
+    [SerializeField] private Slider noiseStrength;
+
+    /// <summary>Text that displays the current noise strenth</summary>
+    [SerializeField] private TMP_Text noiseStrengthDisplay;
 
     /// <summary>Reference to the frequency input field</summary>
-    [SerializeField] private TMP_InputField frequency;
+    [SerializeField] private Slider frequency;
+
+    /// <summary>Text that displays the current frequency</summary>
+    [SerializeField] private TMP_Text frequencyDisplay;
     
     /// <summary>Reference to the octaves input field</summary>
     [SerializeField] private Slider octaves;
@@ -55,17 +61,29 @@ public class CustomSettingsMenu : MonoBehaviour
     [SerializeField] private TMP_Text hillinessFrequencyDisplay;
 
     /// <summary>Reference to the base height frequency input field</summary>
-    [SerializeField] private TMP_InputField baseHeightFrequency;
-    
+    [SerializeField] private Slider baseHeightFrequency;
+
+    /// <summary>Text that displays the current base height frequency</summary>
+    [SerializeField] private TMP_Text baseHeightFrequencyDisplay;
+
     /// <summary>Reference to the base height multiplier input field</summary>
-    [SerializeField] private TMP_InputField baseHeightMultiplier;
-    
+    [SerializeField] private Slider baseHeightMultiplier;
+
+    /// <summary>Text that displays the current base height multiplier</summary>
+    [SerializeField] private TMP_Text baseHeightMultiplierDisplay;
+
     /// <summary>Reference to the base height input field</summary>
-    [SerializeField] private TMP_InputField baseHeight;
-    
+    [SerializeField] private Slider baseHeight;
+
+    /// <summary>Text that displays the current base height</summary>
+    [SerializeField] private TMP_Text baseHeightDisplay;
+
     /// <summary>Reference to the water height input field</summary>
-    [SerializeField] private TMP_InputField waterHeight;
+    [SerializeField] private Slider waterHeight;    
     
+    /// <summary>Text that displays the current water height</summary>
+    [SerializeField] private TMP_Text waterHeightDisplay;
+
     /// <summary>Reference to the chunk resolution slider</summary>
     [SerializeField] private Slider chunkResolution;
 
@@ -84,27 +102,34 @@ public class CustomSettingsMenu : MonoBehaviour
     /// <summary>Initializes the custom world settings fields with the currently selected settings values</summary>
     private void InitInputFields()
     {
-        noiseStrength.text = settingsMenu.selectedSettings.NoiseStrength.ToString();
-        frequency.text = settingsMenu.selectedSettings.Frequency.ToString();
+        noiseStrength.value = settingsMenu.selectedSettings.NoiseStrength;
+        UpdateNoiseStrenthDisplay(noiseStrength.value);
+        frequency.value = settingsMenu.selectedSettings.Frequency;
+        UpdateFrequencyDisplay(frequency.value);
         octaves.value = settingsMenu.selectedSettings.Octaves;
-        octavesDisplay.text = settingsMenu.selectedSettings.Octaves.ToString();
+        UpdateOctavesDisplay(octaves.value);
         lacunarity.value = settingsMenu.selectedSettings.Lacunarity;
-        lacunarityDisplay.text = settingsMenu.selectedSettings.Lacunarity.ToString();
+        UpdateLacunarityDisplay(lacunarity.value);
         persistence.value = settingsMenu.selectedSettings.Persistence;
-        persistenceDisplay.text = settingsMenu.selectedSettings.Persistence.ToString();
+        UpdatePersistenceDisplay(persistence.value);
         forestThreshhold.value = settingsMenu.selectedSettings.ForestThreshhold;
+        UpdateForestThreshholdDisplay(forestThreshhold.value);
         forestFrequency.value = settingsMenu.selectedSettings.ForestFrequency;
-        forestFrequencyDisplay.text = (settingsMenu.selectedSettings.ForestFrequency * 100).ToString();
+        UpdateForestFrequencyDisplay(settingsMenu.selectedSettings.ForestFrequency);
         hillinessFrequency.value = settingsMenu.selectedSettings.HillinessFrequency;
         UpdateHillinessFrequencyDisplay(hillinessFrequency.value);
-        baseHeightFrequency.text = settingsMenu.selectedSettings.BaseHeightFrequency.ToString();
-        baseHeightMultiplier.text = settingsMenu.selectedSettings.BaseHeightMultiplier.ToString();
-        baseHeight.text = settingsMenu.selectedSettings.BaseHeight.ToString();
-        waterHeight.text = settingsMenu.selectedSettings.WaterHeight.ToString();
+        baseHeightFrequency.value = settingsMenu.selectedSettings.BaseHeightFrequency;
+        UpdateBaseHeightFrequencyDisplay(baseHeightFrequency.value);
+        baseHeightMultiplier.value = settingsMenu.selectedSettings.BaseHeightMultiplier;
+        UpdateBaseHeightMultiplierDisplay(baseHeightMultiplier.value);
+        baseHeight.value = settingsMenu.selectedSettings.BaseHeight;
+        UpdateBaseHeightDisplay(baseHeight.value);
+        waterHeight.value = settingsMenu.selectedSettings.WaterHeight;
+        UpdateWaterHeightDisplay(waterHeight.value);
         chunkResolution.value = settingsMenu.selectedSettings.ChunkResolution;
-        chunkResolutionDisplay.text = settingsMenu.selectedSettings.ChunkResolution.ToString();
+        UpdateChunkResolutionDisplay(chunkResolution.value);
         chunkSize.value = settingsMenu.selectedSettings.ChunkSize;
-        chunkSizeDisplay.text = settingsMenu.selectedSettings.ChunkSize.ToString();
+        UpdateChunkSizeDisplay(chunkSize.value);
     }
 
     /// <summary>Resets the custom settings</summary>
@@ -143,18 +168,18 @@ public class CustomSettingsMenu : MonoBehaviour
         try
         {
             GeneratorSettings settings = ScriptableObject.CreateInstance<GeneratorSettings>();
-            settings.NoiseStrength = float.Parse(noiseStrength.text);
-            settings.Frequency = float.Parse(frequency.text);
+            settings.NoiseStrength = noiseStrength.value;
+            settings.Frequency = frequency.value;
             settings.Octaves = (int) octaves.value;
             settings.Lacunarity = lacunarity.value;
             settings.Persistence = persistence.value;
             settings.ForestThreshhold = forestThreshhold.value;
             settings.ForestFrequency = forestFrequency.value;
             settings.HillinessFrequency = hillinessFrequency.value;
-            settings.BaseHeightFrequency = float.Parse(baseHeightFrequency.text);
-            settings.BaseHeightMultiplier = float.Parse(baseHeightMultiplier.text);
-            settings.BaseHeight = float.Parse(baseHeight.text);
-            settings.WaterHeight = float.Parse(waterHeight.text);
+            settings.BaseHeightFrequency = baseHeightFrequency.value;
+            settings.BaseHeightMultiplier = baseHeightMultiplier.value;
+            settings.BaseHeight = baseHeight.value;
+            settings.WaterHeight = waterHeight.value;
             settings.ChunkResolution = (int) chunkResolution.value;
             settings.ChunkSize = (int) chunkSize.value;
 
@@ -208,5 +233,36 @@ public class CustomSettingsMenu : MonoBehaviour
     public void UpdateHillinessFrequencyDisplay(float value)
     {
         hillinessFrequencyDisplay.text = value.ToString().Length > 4 ? value.ToString().Substring(0, 4) : value.ToString();
+    }
+
+    public void UpdateFrequencyDisplay(float value)
+    {
+        value *= 10;
+        frequencyDisplay.text = value.ToString().Length > 4 ? value.ToString().Substring(0, 4) : value.ToString();
+    }
+
+    public void UpdateNoiseStrenthDisplay(float value)
+    {
+        noiseStrengthDisplay.text = ((int) value).ToString();
+    }
+
+    public void UpdateBaseHeightFrequencyDisplay(float value)
+    {
+        baseHeightFrequencyDisplay.text = value.ToString().Length > 4 ? value.ToString().Substring(0, 4) : value.ToString();
+    }
+
+    public void UpdateBaseHeightMultiplierDisplay(float value)
+    {
+        baseHeightMultiplierDisplay.text = value.ToString().Length > 4 ? value.ToString().Substring(0, 4) : value.ToString();
+    }
+
+    public void UpdateBaseHeightDisplay(float value)
+    {
+        baseHeightDisplay.text = value.ToString().Length > 4 ? value.ToString().Substring(0, 4) : value.ToString();
+    }
+
+    public void UpdateWaterHeightDisplay(float value)
+    {
+        waterHeightDisplay.text = value.ToString().Length > 4 ? value.ToString().Substring(0, 4) : value.ToString();
     }
 }

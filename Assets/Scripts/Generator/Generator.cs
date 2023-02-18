@@ -94,7 +94,7 @@ public class Generator : MonoBehaviour
         {
             Destroy(transform.GetChild(0).gameObject);
         }
-        catch { Debug.Log("meow"); }
+        catch { }
         if (GeneratorSettingsSingleton.Instance.useCustomSeed)
             SetSeed(GeneratorSettingsSingleton.Instance.seed);
         else

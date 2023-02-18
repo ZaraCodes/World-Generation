@@ -28,7 +28,7 @@ public class PauseMenu : MonoBehaviour
             pauseMenu.SetActive(!pauseMenu.activeInHierarchy);
             if (pauseMenu.activeInHierarchy)
             {
-                Cursor.lockState = CursorLockMode.Confined;
+                Cursor.lockState = CursorLockMode.None;
                 player.MovementEnabled = false;
                 commandLine.gameObject.GetComponent<CommandLine>().HideChat();
             }
