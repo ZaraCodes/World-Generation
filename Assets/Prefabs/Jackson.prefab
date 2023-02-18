@@ -222,7 +222,7 @@ CharacterController:
   serializedVersion: 2
   m_Height: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
+  m_SlopeLimit: 60
   m_StepOffset: 0.3
   m_SkinWidth: 0.08
   m_MinMoveDistance: 0.001
@@ -243,6 +243,7 @@ MonoBehaviour:
   playerMovement: {fileID: 2660525083550027696}
   camAnimationPlayer: {fileID: 2660525083279743148}
   MovementEnabled: 1
+  generator: {fileID: 0}
 --- !u!114 &2660525083550027696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -384,24 +385,20 @@ MonoBehaviour:
     m_ActionName: JacksonControls/Interact[/Mouse/leftButton]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 1a631f52-6236-44b9-b9ae-f9ed164a2b8f
-    m_ActionName: UI/UI-Back[/Keyboard/escape]
+    m_ActionId: df87b852-6b5a-4d46-906e-5939333a661e
+    m_ActionName: UI/ToggleChat[/Keyboard/t]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 1af1f26c-a293-4e05-9e53-063bee8c036b
-    m_ActionName: UI/Inventory-open[/Keyboard/i]
+    m_ActionId: 1a6586dc-83e2-44e3-b705-d93843d6f4c4
+    m_ActionName: UI/ConfirmChat[/Keyboard/enter]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 928b7679-e414-4df0-a397-0ad94141e846
-    m_ActionName: UI/Textbook-open[/Keyboard/t]
+    m_ActionId: 37ef8d15-e0bc-4d04-8449-9803b041b9d3
+    m_ActionName: UI/Take Screenshot[/Keyboard/f12]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: e42d2e9f-b4b1-4169-841e-ce992f2115a5
-    m_ActionName: UI/Quests-open[/Keyboard/u]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 9a798666-f10c-4d0f-a6cf-00414e03f4e0
-    m_ActionName: UI/Options-open[/Keyboard/o]
+    m_ActionId: bd6829a7-09bf-4635-b838-286304643ff6
+    m_ActionName: UI/Pause[/Keyboard/escape]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: JacksonControls
