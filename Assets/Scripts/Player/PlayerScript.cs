@@ -27,23 +27,25 @@ public class PlayerScript : MonoBehaviour
     /// <summary>Movement vector</summary>
     private Vector2 movementVector;
 
+    /// <summary>Reference to the world generator</summary>
     [SerializeField] private Generator generator;
     #endregion
 
     #region Methods
     /// <summary>
-    /// Quits the game
+    /// Teleports the player to a desired position
     /// </summary>
-    /// <param name="callbackContext">Callback context if the input</param>
-    public void QuitGame(InputAction.CallbackContext callbackContext)
+    /// <param name="x">new x position in the world</param>
+    /// <param name="z">new z position in the world</param>
+    public void Teleport(float x, float z)
     {
-        if (callbackContext.action.WasPerformedThisFrame()) {
-            #if UNITY_EDITOR
-            UnityEditor.EditorApplication.isPlaying = false;
-            #else
-            Application.Quit();
-            #endif
-        }
+        playerMovement.characterController.enabled = false;
+        Vector3 newPosition = new(x, generator.EvaluateCoordinateHeight(new(x, 0, z)) + 1.1f, z);
+        transform.position = newPosition;
+        if (transform.position.y < GeneratorSettingsSingleton.Instance.GeneratorSettings.WaterHeight + 1f)
+            transform.position = new(transform.position.x, GeneratorSettingsSingleton.Instance.GeneratorSettings.WaterHeight + 1f, transform.position.z);
+
+        playerMovement.characterController.enabled = true;
     }
 
     /// <summary>
@@ -60,9 +62,14 @@ public class PlayerScript : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        playerMovement.characterController.enabled = false;
         transform.position = new(Random.Range(-100, 100), 1f, Random.Range(-100, 100));
         transform.position = new(transform.position.x, generator.EvaluateCoordinateHeight(transform.position) + 1f, transform.position.z);
-        if (transform.position.y < 3.5f) transform.position = new(transform.position.x, 3.5f, transform.position.z);
+        
+        if (transform.position.y < GeneratorSettingsSingleton.Instance.GeneratorSettings.WaterHeight + 1f)
+            transform.position = new(transform.position.x, GeneratorSettingsSingleton.Instance.GeneratorSettings.WaterHeight + 1f, transform.position.z);
+
+        playerMovement.characterController.enabled = true;
     }
 
     // Update is called once per frame
